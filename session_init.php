@@ -72,7 +72,7 @@ if(isset($_POST["enviar"])) {
 											$_SESSION['CodUsuario'] = $row["CodUsuario"];
 											$_SESSION['UsuarioNombre'] = $row["Usuario"];
 											//echo '<script language="javascript">alert("Perfil Gerente");</script>';
-											header("Location: sistema/gerentes/index.php");
+											header("Location: sistema/gerente/index.php");
 											}
 											else{
 											//echo '<script language="javascript">alert("Sin Perfil");</script>';

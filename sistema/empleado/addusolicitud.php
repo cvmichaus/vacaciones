@@ -31,10 +31,7 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
 
 								$CorreoEmpleado = $_POST["CorreoEmpleado"];
 								$CorreoReporta = $_POST["CorreoReporta"];
-								
-					
-								
-		
+							
 
                           require("../PHPMailer-master/src/PHPMailer.php");
                           require("../PHPMailer-master/src/SMTP.php");

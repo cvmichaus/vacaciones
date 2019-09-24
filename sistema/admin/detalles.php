@@ -13,9 +13,24 @@ session_start();
 
       $sqlDAtosU = "SELECT * FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu WHERE u.CodUsuario = '".$ClaveUsuario."' ";
     if($resqryDU = $mysqli->query($sqlDAtosU)) {
-    $dataDU = mysqli_fetch_assoc($resqryDU);
-     $dataDU['CodUsuario']; 
-     $dataDU['Fecha_Alta']; 
+      $dataDU = mysqli_fetch_assoc($resqryDU);
+     
+      $CodUsuarioPHP = $dataDU['CodUsuario']; 
+      $FechaAltaPHP = $dataDU['Fecha_Alta']; 
+
+      $Usuariophp =   $dataDU['Usuario']; 
+      $ClavePHP =    $dataDU['Clave']; 
+      $CorreoPHP =    $dataDU['Correo']; 
+      $PerfilPHP =    $dataDU['Perfil']; 
+
+      $NombresPHP =   $dataDU['Nombres']; 
+      $ApPaternoPHP =   $dataDU['ApellidoPaterno']; 
+      $ApMaternoPHP =   $dataDU['ApellidoMaterno']; 
+      $PosicionPHP =   $dataDU['Posicion']; 
+      $AreaPHP =   $dataDU['Area']; 
+      $ReportaPHP =    $dataDU['Reporta']; 
+      $Jefe2PHP =   $dataDU['Jefe2']; 
+      $FechaIngresoPHP =   $dataDU['fecha_ingreso']; 
 
     }
 ?>
@@ -27,7 +42,7 @@ session_start();
 		<div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Usuario</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input  type="text" id="usuario" name="usuario" placeholder="Usuario" required>
+                        <input  type="text" id="usuario" name="usuario" placeholder="Usuario" required value='<?php echo $Usuariophp; ?>'>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -35,7 +50,7 @@ session_start();
   <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Password</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                          <input  type="password" id="passwd" size="20" name="passwd" placeholder="Pass" required >
+                          <input  type="password" id="passwd" size="20" name="passwd" placeholder="Pass" required value='<?php echo $ClavePHP; ?>' >
                           <span class="fa fa-eye-slash form-control-feedback right" aria-hidden="true"></span>
                         </div>
                       </div>
@@ -44,7 +59,7 @@ session_start();
   <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Confirmar Password</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                     <input  type="password" id="passwd2" size="20" name="passwd2" placeholder="PassV" required onblur="validarPasswd();">
+                     <input  type="password" id="passwd2" size="20" name="passwd2" placeholder="PassV" value='<?php echo $ClavePHP; ?>' required onblur="validarPasswd();">
                           <span class="fa fa-eye-slash form-control-feedback right" aria-hidden="true"></span>
                         </div>
                       </div>
@@ -53,7 +68,7 @@ session_start();
                       <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Correo</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                         <input  type="text" id="correo" name="correo" placeholder="Correo">
+                         <input  type="text" id="correo" name="correo" placeholder="Correo" value='<?php echo $CorreoPHP; ?>'>
                           <span class="fa fa-exclamation form-control-feedback right" aria-hidden="true"></span>
                         </div>
                       </div>
@@ -83,7 +98,7 @@ session_start();
 		 <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Nombre</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input  type="text" id="nombre" name="nombre" placeholder="Nombre" required>
+                        <input  type="text" id="nombre" name="nombre" placeholder="Nombre" value='<?php echo $NombresPHP; ?>' required>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -91,7 +106,7 @@ session_start();
                          <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Apellido Paterno</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input  type="text" id="appaterno" name="appaterno" placeholder="Apellido Paterno">
+                        <input  type="text" id="appaterno" name="appaterno" placeholder="Apellido Paterno" value='<?php echo $ApPaternoPHP ; ?>'>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -99,17 +114,18 @@ session_start();
                          <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Apellido Materno</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                       <input  type="text" id="apmaterno" name="apmaterno" placeholder="Apellido Materno">
+                       <input  type="text" id="apmaterno" name="apmaterno" placeholder="Apellido Materno" value='<?php echo $ApMaternoPHP; ?>'>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
 
-
+  
+     
 
 						      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Posición</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                       <input  type="text" id="Posicion" name="Posicion" placeholder="Posición">
+                       <input  type="text" id="Posicion" name="Posicion" placeholder="Posición" value='<?php echo $PosicionPHP; ?>'>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -119,7 +135,7 @@ session_start();
 						      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Área</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input  type="text" id="area" name="area" placeholder="Área">
+                        <input  type="text" id="area" name="area" placeholder="Área" value='<?php echo $AreaPHP; ?>'>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -160,7 +176,7 @@ session_start();
                          <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha de Ingreso</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-   <input  type="date" id="fecha_ingreso" name="fecha_ingreso" placeholder="Fecha Alta" onblur="CargaAntiguedad(this.value)"  required>
+   <input  type="date" id="fecha_ingreso" name="fecha_ingreso" placeholder="Fecha Alta" value="<?php echo $FechaIngresoPHP; ?>" onblur="CargaAntiguedad(this.value)"  required>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
