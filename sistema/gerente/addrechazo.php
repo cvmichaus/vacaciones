@@ -165,6 +165,26 @@ session_start();
 
                     if($resultado1 = $mysqli->query($consulta1)) {/* SE GUARDO LA CONSULTA */
 
+                         
+                        $sqltrab = "SELECT * FROM  `tbl_empleados`   WHERE  CodUsu  = ".$_POST["CodEmpleado"]." ";
+                        if($qrytrab = $mysqli->query($sqltrab)) {
+                        $datatrab = mysqli_fetch_assoc($qrytrab);
+                        $DiasVacPHP = $datatrab['DiasVac'];
+
+
+                              $sqlsol = "SELECT * FROM  `tbl_solicitud`  WHERE  CodUsuario  = ".$_POST["CodEmpleado"]." ";
+                              if($qrysol = $mysqli->query($sqlsol)) {
+                              $datasol = mysqli_fetch_assoc($qrysol);
+                              $DiasSolPHP = $datasol['DiasVac'];
+
+                               echo $total = $DiasVacPHP - $DiasSolPHP;
+
+
+                              }
+
+                         
+
+                        }
 
                     }
 
