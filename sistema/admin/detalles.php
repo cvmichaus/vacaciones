@@ -199,11 +199,8 @@ session_start();
 		
 	</form>
 
+      <a  class="btn btn-round btn-danger btn-xs" href="delateusuario.php?codUsuario=<?php echo $ClaveUsuario; ?>">Eliminar Usuario</a>
 
-  <form action="delateusuario.php" method="post">
-  <input type="hidden" name="codUsuario" id="codUsuario" value='<?php echo $row['CodUsuario']; ?>'>
-  <input type="submit" value="Eliminar" class="btn btn-round btn-danger btn-xs">  
-  </form>
 
 	<?php
   } else {

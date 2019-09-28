@@ -21,10 +21,10 @@ session_start();
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Observaciones de Rechazo</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                         <textarea id="observaciones" name="observaciones" type="text" class="form-control" data-inputmask=""></textarea>
-                           <input id="CodS" name="CodS" type="hidden" class="form-control" value='<?php echo $CodSolicitudphp; ?>'>
-                          <input id="CodEmpleado" name="CodEmpleado" type="hidden" class="form-control" value='<?php echo $CodUsuariophp; ?>'>
-						 <input id="EstatusSol" name="EstatusSol" type="hidden" class="form-control" value='0'>
-						<span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                        <input id="CodS" name="CodS" type="hidden" class="form-control" value='<?php echo $CodSolicitudphp; ?>'>
+                        <input id="CodEmpleado" name="CodEmpleado" type="hidden" class="form-control" value='<?php echo $CodUsuariophp; ?>'>
+                        <input id="EstatusSol" name="EstatusSol" type="hidden" class="form-control" value='0'>
+                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
 
