@@ -204,7 +204,11 @@ Full screen Modal
     <tbody>
       <?php
 
-        $ConsultaPrincipal = "SELECT * FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu WHERE u.Estatus = 1 ";
+        $ConsultaPrincipal = "SELECT E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac 
+FROM `tbl_usuarios` as u 
+INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu 
+INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu 
+WHERE u.Estatus = 1 ";
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
@@ -224,7 +228,7 @@ Full screen Modal
             <td><?php echo $data['fecha_ingreso']; ?></td>
             <td><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
             <td><?php echo $data['DiasVac']; ?></td>
-            <td><?php echo $data['DiasVac']; ?></td>
+            <td></td>
             <td>
               <button type="button" class="btn btn-round btn-warning btn-xs" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
             </td>

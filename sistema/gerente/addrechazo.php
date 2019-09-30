@@ -50,7 +50,66 @@ session_start();
 
                          $consulta3 = "UPDATE `tbl_empleados`  SET `DiasVac` = ".$total." WHERE  CodUsu = ".$_POST["CodEmpleado"]." ";  
                                     if($resultado3 = $mysqli->query($consulta3)) {
-                                          header("Location: index.php");
+
+                           require("../PHPMailer-master/src/PHPMailer.php");
+                          require("../PHPMailer-master/src/SMTP.php");
+                          require("../PHPMailer-master/src/Exception.php");
+
+
+                          $mail = new PHPMailer\PHPMailer\PHPMailer();
+                          $mail->IsSMTP(); 
+
+                          $mail->CharSet="UTF-8";
+                           $mail->Host = "smtp.office365.com";
+                          //$mail->SMTPDebug = 2; 
+                          $mail->Port = 587; //465 or 587
+
+                          $mail->SMTPSecure = 'tls';  
+                          $mail->SMTPAuth = true; 
+                          $mail->IsHTML(true);
+
+                          //Authentication
+                           $mail->Username = "recursos.humanos@wri.org";
+                          $mail->Password = "WRIm3x1c086!";
+
+                          //Set Params
+                          $mail->SetFrom("recursos.humanos@wri.org");
+                          $mail->AddAddress($CorreoEmpleado2);
+                          $mail->AddAddress("michusvalentin@hotmail.com");
+                     
+
+                          $mail->Subject = "Solicitud de Vacaciones Aprobada";
+                          $mail->Body = '
+                          <html>
+                          <head>
+                          <title>Bienvenido</title>
+                          </head>
+                          <body>
+                          <h1>
+                          Notificacion de Solicitud de Vacaciones Apropbada:
+                          </h1>
+                          <p>
+                          
+              Hola estimado Usuario  tu solicitud ha sido aprobada <br>
+              Para revisar tus dias restantes segir el siguiente link:
+                          <br>
+                          http:localhost/sistemadevacaciones/index.php
+                          </p>
+                          </body>
+                          </html>
+                          ';
+
+
+                          if(!$mail->Send()) {
+                          // echo "Mailer Error: " . $mail->ErrorInfo;
+                          echo "Error al enviar Mensaje";
+                          } else {
+                              
+                              header("Location: index.php");  
+                             
+                    
+                          }
+                                        
                                     }else{
                                          ECHO "ERROR";
                                          echo mysql_errno($consulta3);
@@ -80,7 +139,7 @@ session_start();
                       $consulta2 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";             
                       if($resultado2 = $mysqli->query($consulta2)) {
 
-                         require("../PHPMailer-master/src/PHPMailer.php");
+                                  require("../PHPMailer-master/src/PHPMailer.php");
                           require("../PHPMailer-master/src/SMTP.php");
                           require("../PHPMailer-master/src/Exception.php");
 
