@@ -16,6 +16,7 @@ session_start();
       $dataDU = mysqli_fetch_assoc($resqryDU);
      
       $CodUsuarioPHP = $dataDU['CodUsuario']; 
+      $CodEPHP = $dataDU['CodE'];
       $FechaAltaPHP = $dataDU['Fecha_Alta']; 
 
       $Usuariophp =   $dataDU['Usuario']; 
@@ -35,7 +36,7 @@ session_start();
     }
 ?>
 
-	<form  class="form-horizontal form-label-left" action="addusuario.php" method="post" accept-charset="utf-8" >
+	<form  class="form-horizontal form-label-left" action="modsuario.php" method="post" accept-charset="utf-8" >
 
 		<h2>Modificar Datos Usuario <?php echo $dataDU["Nombres"]; echo " "; echo $dataDU["ApellidoPaterno"];  echo " "; echo $dataDU["ApellidoMaterno"]; ?></h2>
 
@@ -47,22 +48,6 @@ session_start();
                         </div>
                         </div>
 
-  <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Password</label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                          <input  type="password" id="passwd" size="20" name="passwd" placeholder="Pass" required value='<?php echo $ClavePHP; ?>' >
-                          <span class="fa fa-eye-slash form-control-feedback right" aria-hidden="true"></span>
-                        </div>
-                      </div>
-
-
-  <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Confirmar Password</label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                     <input  type="password" id="passwd2" size="20" name="passwd2" placeholder="PassV" value='<?php echo $ClavePHP; ?>' required onblur="validarPasswd();">
-                          <span class="fa fa-eye-slash form-control-feedback right" aria-hidden="true"></span>
-                        </div>
-                      </div>
 
 
                       <div class="form-group">
@@ -79,7 +64,18 @@ session_start();
                         <div class="col-md-9 col-sm-9 col-xs-9">
                           
              <select  id="perfil" name="perfil"  class="form-control" data-inputmask="">
-              <option value="">SELECCIONAR PERFIL</option>
+              <option value="<?php echo $PerfilPHP; ?>">
+                <?php 
+                if($PerfilPHP == 1){
+                  echo "Administrador";
+                } else if($PerfilPHP == 2){
+                  echo "Empleado";
+                } else if($PerfilPHP == 3){
+                  echo "Gerente";
+                } 
+
+                ?>
+              </option>
               <option value="1">Administrador</option>
               <option value="2">Empleado</option>
               <option value="3">Gerente</option>
@@ -146,7 +142,19 @@ session_start();
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Reporta</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <select id="reporta" name="reporta" class="form-control" data-inputmask="" >
-                            <option value="">Seleccione</option>
+                            <option value='<?php echo $ReportaPHP; ?>'>
+                                    <?php 
+                                  
+                                   $sqlUsuario2 = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND   u.Perfil = 3 and u.CodUsuario = '".$ReportaPHP."'   ";
+                            if($resqryUsuario2 = $mysqli->query($sqlUsuario2)) {
+                            while($dataEmpleado2 = mysqli_fetch_assoc($resqryUsuario2)){ 
+                                 echo $dataEmpleado2['CodUsuario']; ?>-<?php echo $dataEmpleado2['Nombres']; ?> <?php echo $dataEmpleado2['ApellidoPaterno']; ?> <?php echo $dataEmpleado2['ApellidoMaterno']; 
+                            }
+
+                          }
+
+                                    ?>
+                            </option>
                             <option value="">Ninguno</option>
                             <?php
                             $sqlUsuario = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND   u.Perfil = 3  ";
@@ -173,18 +181,15 @@ session_start();
                         </div>
                         </div>
 
-                         <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha de Ingreso</label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-   <input  type="date" id="fecha_ingreso" name="fecha_ingreso" placeholder="Fecha Alta" value="<?php echo $FechaIngresoPHP; ?>" onblur="CargaAntiguedad(this.value)"  required>
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                        </div>
-                        </div>
+          
 		
 	
 		
 		<div id="resultado"></div>
 
+        <input type="hidden" name="CodUsuario" id="CodUsuario" value="<?php echo $CodUsuarioPHP; ?>" >
+         <input type="hidden" name="CodU" id="CodU" value="<?php echo $CodEPHP; ?>" >
+       
 
 		             <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
