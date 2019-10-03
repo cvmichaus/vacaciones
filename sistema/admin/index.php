@@ -183,7 +183,7 @@ Full screen Modal
 	<div class="container-fluid">
 
 
-
+ <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formusuario.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Crear Nuevo Usuario </button>
       <hr>
 
       <table id="example2" class="display compact" style="width:100%" >
@@ -204,11 +204,8 @@ Full screen Modal
     <tbody>
       <?php
 
-        $ConsultaPrincipal = "SELECT E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac 
-FROM `tbl_usuarios` as u 
-INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu 
-INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu 
-WHERE u.Estatus = 1 ";
+        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu 
+INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu WHERE u.Estatus = 1 ";
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
@@ -230,7 +227,9 @@ WHERE u.Estatus = 1 ";
             <td><?php echo $data['DiasVac']; ?></td>
             <td></td>
             <td>
-              <button type="button" class="btn btn-round btn-warning btn-xs" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
+              <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
+        <br> <br>
+                <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles2.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Contraseña </button> <br> <br>
             </td>
 
           </tr>
@@ -242,7 +241,7 @@ WHERE u.Estatus = 1 ";
 </table>
 
 
-           <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formusuario.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Crear Nuevo Usuario </button>
+          
 
 
   <!--SMALL MODAL-->
