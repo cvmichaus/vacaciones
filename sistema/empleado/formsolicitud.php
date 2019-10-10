@@ -61,7 +61,19 @@ session_start();
                                 while($row = mysqli_fetch_assoc($resqryUsuario)){ 
 								$esp = " ";
 								 $CorreoPHP = $row['Correo'];
-								 $DiasVacPHP = $row['DiasVac'];
+
+                        $sqlUsuarioDV = "SELECT * FROM `tbl_vacaciones_usuarioxanio` as u  
+                        WHERE  u.CodEmpleado = ".$iduser." ";
+
+                        if($resqryUsuarioDV = $mysqli->query($sqlUsuarioDV)) {
+                        while($rowDV = mysqli_fetch_assoc($resqryUsuarioDV)){ 
+                             $DiasVacPHP = $rowDV['DiasVac'];
+                        }
+
+                        }
+                
+
+
 								  $NombrePHP = $row['Nombres'].$esp.$row['ApellidoPaterno'].$esp.$row['ApellidoMaterno'];
 								?>
 				<input  id="NombreEmpleado" name="NombreEmpleado" type="hidden" class="form-control" data-inputmask="" value='<?php echo $NombrePHP; ?>'>
@@ -98,7 +110,7 @@ session_start();
 
                                           <?php
 
-                        $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                        $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and SeUso != 1 ";
                         if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
                                                  $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
                                                 

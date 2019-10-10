@@ -420,7 +420,7 @@ Full screen Modal
                                     
                                     if($dataCons01['SiHayDias'] == 1 ){
 
-                                      $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                                      $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and != 1 ";
                                             if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];

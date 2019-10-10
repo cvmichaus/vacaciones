@@ -197,6 +197,7 @@ Full screen Modal
           <th>Fecha Ingreso</th>
           <th width="20%">Antiguedad</th>
           <th>Dias Vacaciones Periodo Anterior</th>
+          <th>Dias Vacaciones x Ley</th>
           <th>Dias Vacaciones</th>
           <th>Dias Vacaciones x Disfrutar</th>
           <th>Opciones</th>
@@ -236,10 +237,51 @@ Full screen Modal
                         }
               ?>    
              </td>
-            <td><?php echo $data['DiasVac']; ?></td>
+             <td>
 
+              <?php 
+
+               $sqlUsuarioDV2 = "SELECT * FROM `tbl_empleados` as u  
+                        WHERE  u.CodUsu = ".$data['CodUsuario']."  ";
+
+                        if($resqryUsuarioDV2 = $mysqli->query($sqlUsuarioDV2)) {
+                        while($rowDV2 = mysqli_fetch_assoc($resqryUsuarioDV2)){ 
+                             echo $TotalDiasVacPHP = $rowDV2['DiasVac'];
+                        }
+
+                        }
+              //echo $data['DiasVac']; 
+              ?></td>
             <td>
 
+              <?php 
+
+               $sqlUsuarioDV = "SELECT * FROM `tbl_vacaciones_usuarioxanio` as u  
+                        WHERE  u.CodEmpleado = ".$data['CodUsuario']." ";
+
+                        if($resqryUsuarioDV = $mysqli->query($sqlUsuarioDV)) {
+                        while($rowDV = mysqli_fetch_assoc($resqryUsuarioDV)){ 
+                             echo $DiasVacPHP = $rowDV['DiasVac'];
+                        }
+
+                        }
+              //echo $data['DiasVac']; 
+              ?></td>
+
+            <td>
+                    <?php 
+
+               $sqlUsuarioDVD = "SELECT * FROM `tbl_solicitud` as u  
+                        WHERE  u.CodUsuario = ".$data['CodUsuario']." AND Estatus = 1 ";
+
+                        if($resqryUsuarioDVD = $mysqli->query($sqlUsuarioDVD)) {
+                        while($rowDVDVD = mysqli_fetch_assoc($resqryUsuarioDVD)){ 
+                             echo $DiasVacPHP = $rowDVDVD['DiasSolicitados'];
+                        }
+
+                        }
+              //echo $data['DiasVac']; 
+              ?>
             </td>
 
             <td>
