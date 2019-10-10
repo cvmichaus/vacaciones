@@ -236,6 +236,7 @@ Full screen Modal
           <th>Jefe 2</th>
           <th>Fecha Ingreso</th>
           <th>Antiguedad</th>
+          <th>Dias Vacaciones Periodo Anterior</th>
           <th>Dias Vacaciones</th>
           <th>Dias Vacaciones x Disfrutar</th>
           
@@ -263,6 +264,16 @@ Full screen Modal
             <td><?php echo $data['Jefe2']; ?></td>
             <td><?php echo $data['fecha_ingreso']; ?></td>
             <td><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
+             <td>
+              <?php
+                 $qryConsulta04 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                                            if($resQryConsulta04 = $mysqli->query($qryConsulta04)) {
+                                              $dataCons04 = mysqli_fetch_assoc($resQryConsulta04);   
+                                                   echo  $DiasVacAntPHP =  $dataCons04['DiasVacAnt'];
+                                            }   
+
+                                            ?>            
+             </td>
             <td><?php echo $data['DiasVac']; ?></td>
             
               <td>
@@ -322,7 +333,7 @@ Full screen Modal
                           <td><?php echo $row['CodSol']; ?></td>
                           <td><?php //echo $row['CodUsuario'];
 
-                              $sqlU = "SELECT * FROM `tbl_usuarios` as u INNER JOIN `tbl_empleadoss` as e ON u.CodUsu = e.CodE  WHERE  u.CodUsu = ".$row['CodUsuario']."  ";
+          $sqlU = "SELECT * FROM `tbl_usuarios` as u INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodE  WHERE  u.CodUsuario = ".$row['CodUsuario']."  ";
                 if($resqryU = $mysqli->query($sqlU)) {
                 while($dataU = mysqli_fetch_assoc($resqryU)){  
                 echo $dataU['Nombres']; echo " "; echo $dataU['ApellidoPaterno']; echo " "; echo $dataU['ApellidoMaterno'];
@@ -403,21 +414,24 @@ Full screen Modal
 
             <?php
 
-        $qryConsulta01 = "SELECT COUNT (DiasVacAnt) as SiHayDias FROM `tbl_periodoanterior` where CodUsuario =  ".$iduser." ";
+        $qryConsulta01 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
      if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
-                                while($dataCons01 = mysqli_fetch_assoc($resQryConsulta01)){     
-                                    if($dataCons01['SiHayDias'] <> 0 ){
+                                     $dataCons01 = mysqli_fetch_assoc($resQryConsulta01);
+                                    
+                                    if($dataCons01['SiHayDias'] == 1 ){
 
-                                        $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` where CodUsuario =  ".$iduser." ";
+                                      $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
                                             if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
 
-                                                      echo " Con ".$DiasVacAntPHP." Dias del Periodo Anterior , Tienes 90 dias para solicitarlo  de lo contrario venceran";
+                                                      echo " Con ".$DiasVacAntPHP." Dias del Periodo Anterior , Tienes 90 dias para solicitarlo  de lo contrario venceran.";
                                             }
-                                          
+                                                                                
+                                    }else{
+                                        
                                     }
-                            }
+                            
 
                         }
             ?>
@@ -560,12 +574,24 @@ Full screen Modal
 <!-- RESTA DIAS -->
   <script type="text/javascript">
   function restadias(){
-  var diassol = document.getElementById('diassol').value;
-  var totaldias = document.getElementById('totaldias').value;
-  var res = parseInt(totaldias) - parseInt(diassol);
-  document.getElementById("diasres").value = res;
-  }
 
+  var diassol = document.getElementById('diassol').value;
+  var diasperiodoant = document.getElementById('diasperiodoant').value;
+
+      if(diasperiodoant >= 1){
+      var totaldias = document.getElementById('totaldias').value;
+
+      var total = parseInt(totaldias) + parseInt(diasperiodoant);
+      var res = parseInt(total) - parseInt(diassol);
+      document.getElementById("diasres").value = res;
+
+      } else{
+      var totaldias = document.getElementById('totaldias').value;
+      var res = parseInt(totaldias) - parseInt(diassol);
+      document.getElementById("diasres").value = res;
+      }
+
+  }
 
 
   </script>

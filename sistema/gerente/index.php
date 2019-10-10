@@ -221,8 +221,7 @@ Full screen Modal
 <!--TABLA DE SOLICITUDES DE VACACIONES-->
       <table id="example2" class="display compact" style="width:100%" >
       <thead>
-      <tr>
-      <th>Cod Solicitud</th>
+      <tr style="text-align: center;vertical-align: middle;font-size: .9em; font-style: oblique;">
       <th>Usuario</th>
       <th>Periodo</th>
       <th>Fecha Inicio</th>
@@ -232,6 +231,7 @@ Full screen Modal
       <th>Dias Restantes</th>
       <th>Dias Vacaciones</th>
       <th>Estatus</th>
+      <th>Observaciones</th>
       <th>Opciones</th>
       </tr>
     </thead>
@@ -240,25 +240,25 @@ Full screen Modal
 
         $sqlUsuarioS = "SELECT * FROM `tbl_solicitud` s 
                 INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario
-                WHERE e.Reporta = ".$iduser." ";
+                WHERE e.Reporta = ".$iduser." ORDER BY s.CodSol DESC ";
                            if($resqryUsuarios = $mysqli->query($sqlUsuarioS)) {
                                 while($row = mysqli_fetch_assoc($resqryUsuarios)){   
       ?>
-                <td><?php echo $row['CodSol']; ?></td>
+              <tr style="text-align: center;vertical-align: middle;font-size: .8em;">
                  <td>
                   <?php
                   // echo $row['CodUsuario']; 
 
                           $ConsultaPrincipal = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$row['CodUsuario']." ";
                           if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
-                          while($data = mysqli_fetch_assoc($resqryUsuario)){    
+                          $data = mysqli_fetch_assoc($resqryUsuario);   
                                  $sqlObtenerU = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data['CodUsu']."  ";
                                         if($resqry = $mysqli->query($sqlObtenerU)) {
                                         while($rowEmp = mysqli_fetch_assoc($resqry)){  
                                         echo $rowEmp['Nombres']; echo " "; echo $rowEmp['ApellidoPaterno']; echo " "; echo $rowEmp['ApellidoMaterno'];
+                                         }
                                         }
-                                        }
-                          }
+                            
                           }
 
                    ?></td>
@@ -281,17 +281,34 @@ Full screen Modal
                 else {echo "NA";}
               ?>
               </td>
+                <td>
+                  <?php
+                            $qryConsulta01 = "SELECT * FROM `tbl_rasolicitud`  WHERE  CodSol = ".$row['CodSol']." ";
+                            if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
+                            while($dataCons01 = mysqli_fetch_assoc($resQryConsulta01)){     
+                                  echo nl2br($dataCons01['Motivo']); 
+                            }
+
+                            }
+
+                   
+                   ?></td>
               <td>
+               <div class="btn-group btn-group-toggle" data-toggle="buttons">
                <?php
                if($EstatusPHP == 2  ){             
                ?>
-               <button type="button" class="btn btn-round btn-success btn-xs" onclick="ejecuta_ajax('formaceptar.php','cods=<?php echo $row['CodSol']; ?>&codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Aceptar </button>
-               
-               <button type="button" class="btn btn-round btn-danger btn-xs" onclick="ejecuta_ajax('formrechazar.php','cods=<?php echo $row['CodSol']; ?>&codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Rechazar </button>
-              </td>
-              <?php
+               <button type="button" class="btn btn-round btn-success btn-sm" onclick="ejecuta_ajax('formaceptar.php','cods=<?php echo $row['CodSol']; ?>&codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Aceptar </button>
+               &nbsp;&nbsp;
+               <button type="button" class="btn btn-round btn-danger btn-sm" onclick="ejecuta_ajax('formrechazar.php','cods=<?php echo $row['CodSol']; ?>&codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Rechazar </button>
+                  <?php
                           }
                        ?>
+                     &nbsp; &nbsp;
+                <button type="button" class="btn btn-round btn-primary btn-sm" onclick="ejecuta_ajax('addvacaciones.php','codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Add Vacaciones </button>
+                  </div>
+              </td>
+             
                         </tr>
                        <?php
                           }

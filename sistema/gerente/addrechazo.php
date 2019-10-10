@@ -22,9 +22,42 @@ session_start();
         $resqryUsuario = $mysqli->query($sqlUsuario);
         $data = mysqli_fetch_assoc($resqryUsuario);
         $CorreoEmpleado = $data['Correo'];
-        
 
+
+
+                  $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$CodEmpleado." ";
+                  if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
+                  $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
+
+                                if($dataCons98['SiHayDias'] == 1 ){
+
+                                   $qryConsulta97 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$CodEmpleado." ";
+                                                if($resQryConsulta97 = $mysqli->query($qryConsulta97)) {
+
+                                                $dataCons97 = mysqli_fetch_assoc($resQryConsulta97);   
+                                                $CodPeriodoAntPHP =  $dataCons97['CodPeridoAnt'];
+
+                                                $qryConsulta94 = "UPDATE  `tbl_periodoanterior` SET SeUso = 1  WHERE CodPeriodoAnt =  ".$CodPeriodoAntPHP." ";
+
+                                                    if($resQryConsulta94 = $mysqli->query($qryConsulta94)) {
+                                                    echo $CodPeriodoAntPHP;
+                                                    }else{ echo "ERROR EN consulta94";  echo "<br> "; }
+
+                                                }else { echo "ERROR E LA CONSULTA 97";  echo "<br> "; }
+    
+                                        }else{
+                                   echo "SIN DIAS 0 ";  echo "<br> "; echo "<br> ";
+                                   }
+
+                  echo "ERROR EN LA CONSULTA qryConsulta98 ";  echo "<br> ";
+              }
+
+        
+/*
          if($EstatusSolicitud == 1 ){//ACEPTADO
+
+
+
 
 
                       $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','2')";             
@@ -48,8 +81,11 @@ session_start();
                                  $total = $DiasVacPHP - $DiasSolPHP;
 
 
-                         $consulta3 = "UPDATE `tbl_empleados`  SET `DiasVac` = ".$total." WHERE  CodUsu = ".$_POST["CodEmpleado"]." ";  
+                         $consulta3 = "UPDATE `tbl_vacaciones_usuarioxanio`  SET `DiasVac` = ".$total." WHERE  CodEmpleado = ".$_POST["CodEmpleado"]." ";  
                                     if($resultado3 = $mysqli->query($consulta3)) {
+
+
+
 
                            require("../PHPMailer-master/src/PHPMailer.php");
                           require("../PHPMailer-master/src/SMTP.php");
@@ -131,7 +167,7 @@ session_start();
                       }
 
          }
-         else if($EstatusSolicitud == 0){  /*ceptado*/
+         else if($EstatusSolicitud == 0){  
 
                  $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','1')";             
                       if($resultado1 = $mysqli->query($consulta1)) {
@@ -201,7 +237,7 @@ session_start();
                     }
 
          }
-
+*/
 
                                        
 }else {

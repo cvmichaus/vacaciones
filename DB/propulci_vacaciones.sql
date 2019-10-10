@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-10-2019 a las 08:04:38
+-- Tiempo de generación: 10-10-2019 a las 12:03:30
 -- Versión del servidor: 10.3.15-MariaDB
 -- Versión de PHP: 7.3.6
 
@@ -112,15 +112,16 @@ CREATE TABLE `tbl_periodoanterior` (
   `CodPeridoAnt` int(12) NOT NULL,
   `CodUsuario` int(12) NOT NULL,
   `PeriodoAnt` int(12) NOT NULL,
-  `DiasVacAnt` int(12) NOT NULL
+  `DiasVacAnt` int(12) NOT NULL,
+  `SeUso` int(2) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tbl_periodoanterior`
 --
 
-INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`, `CodUsuario`, `PeriodoAnt`, `DiasVacAnt`) VALUES
-(3, 17, 2017, 2);
+INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`, `CodUsuario`, `PeriodoAnt`, `DiasVacAnt`, `SeUso`) VALUES
+(3, 17, 2017, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -139,6 +140,13 @@ CREATE TABLE `tbl_rasolicitud` (
   `EstatusSolicitud` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Volcado de datos para la tabla `tbl_rasolicitud`
+--
+
+INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`, `Tipo`, `Motivo`, `CodUsuario`, `FechaAR`, `HoraAR`, `EstatusSolicitud`) VALUES
+(7, 5, 1, 'Por Pendientes no te podemos dar vacaciones en ese Periodos que Pides, saludos', 16, '2019-10-10', '03:05:14', 0);
+
 -- --------------------------------------------------------
 
 --
@@ -156,8 +164,17 @@ CREATE TABLE `tbl_solicitud` (
   `Periodo` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
   `DiasSolicitados` int(12) NOT NULL,
   `TotaldiasVac` int(12) NOT NULL,
-  `DiasRestantes` int(12) NOT NULL
+  `DiasRestantes` int(12) NOT NULL,
+  `DiasPeriodoAnt` int(12) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Volcado de datos para la tabla `tbl_solicitud`
+--
+
+INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `FechaInicio`, `FechaFin`, `Estatus`, `FechaAltaS`, `HoraAltaS`, `Periodo`, `DiasSolicitados`, `TotaldiasVac`, `DiasRestantes`, `DiasPeriodoAnt`) VALUES
+(4, 17, '2019-10-10', '2019-10-15', 2, '2019-10-10', '02:23:00', '10 al 15 de Octubre del 2019', 5, 6, 3, 2),
+(5, 16, '2019-10-10', '2019-10-14', 0, '2019-10-10', '02:36:14', '10 al 14 de Octubre del 2019', 4, 8, 4, 0);
 
 -- --------------------------------------------------------
 
@@ -302,13 +319,13 @@ ALTER TABLE `tbl_periodoanterior`
 -- AUTO_INCREMENT de la tabla `tbl_rasolicitud`
 --
 ALTER TABLE `tbl_rasolicitud`
-  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_solicitud`
 --
 ALTER TABLE `tbl_solicitud`
-  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_usuarios`

@@ -88,13 +88,50 @@ session_start();
 		/*OBTENEMOS LOS DATOS PARA ENVIAR EL CORREO*/
 						?>
 													
-						<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones </label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input  id="totaldias" name="totaldias" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP; ?>'>
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                        </div>
-                        </div>
+                  <div class="form-group">
+                  <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones </label>
+                  <div class="col-md-9 col-sm-9 col-xs-9">
+                  <input  id="totaldias" name="totaldias" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP; ?>'>
+                  <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                  </div>
+                  </div>
+
+                                          <?php
+
+                        $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                        if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
+                                                 $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
+                                                
+                                                if($dataCons98['SiHayDias'] == 1 ){
+
+                                                  $qryConsulta97 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                                                        if($resQryConsulta97 = $mysqli->query($qryConsulta97)) {
+                                                          $dataCons97 = mysqli_fetch_assoc($resQryConsulta97);   
+                                                                $DiasVacAntPHP =  $dataCons97['DiasVacAnt'];
+
+                                                        }
+                                                        ?>
+                                                       <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones Periodo Anterior </label>
+                                    <div class="col-md-9 col-sm-9 col-xs-9">
+                                    <input  id="diasperiodoant" name="diasperiodoant" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacAntPHP; ?>'>
+                                    <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                                    </div>
+                                    </div>
+                                                        <?php
+                                                                                            
+                                                }else{
+                                                   ?>
+                                     <input  id="diasperiodoant" name="diasperiodoant" type="hidden" class="form-control" data-inputmask="" value=''>
+                                                  <?php 
+                                                }
+                                        
+
+                                    }
+                        ?>
+
+                       
+
 							
                           <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Restantes</label>

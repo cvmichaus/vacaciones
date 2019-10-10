@@ -15,7 +15,7 @@ $user = isset($_SESSION['UsuarioNombre']) ? $_SESSION['UsuarioNombre'] : null ;
 $iduser= isset($_SESSION['CodUsuario']) ? $_SESSION['CodUsuario'] : null ;
 
 
-$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."', '".$_POST['periodo']."', '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','2','".$fecha_del_dia."','".$hora_actual."')";					   
+$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`DiasPeriodoAnt`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."', '".$_POST['periodo']."', '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','".$_POST['diasperiodoant']."','2','".$fecha_del_dia."','".$hora_actual."')";					   
 	if($resultado1 = $mysqli->query($consulta1)) {
 		
 		
@@ -76,7 +76,7 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
 						  Hola estimado Gerente del Area el empleado '.$_POST['NombreEmpleado'].' a solicitado vacaciones '.$_POST['periodo'].' <br>
 						  Para aprobar o rechazar las vacaciones favor de segir el siguiente link:
                           <br>
-                          http:localhost/sistemadevacaciones/index.php
+                         
                           </p>
                           </body>
                           </html>
