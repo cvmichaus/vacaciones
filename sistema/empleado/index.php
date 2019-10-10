@@ -23,18 +23,19 @@ session_start();
 
 
 <!--<script src="//code.jquery.com/jquery-3.4.1.min.js" ></script>-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
 
 <!--
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 -->
 <!--<script type="text/javascript" charset="utf8" src=""></script>-->
-<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -47,8 +48,15 @@ session_start();
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
 
+<script type="text/javascript" language="javascript" class="init">
+   $(document).ready(function()
+   {
+      $("#mostrarmodal").modal("show");
+   });
+</script>
 
 <script type="text/javascript" language="javascript" class="init">
+
  $(document).ready(function() {
         var selected = [];
 
@@ -216,7 +224,6 @@ Full screen Modal
 	<div class="container-fluid">
 
 
-
       <hr>
 
       <table id="example2" class="display compact" style="width:100%" >
@@ -239,7 +246,7 @@ Full screen Modal
 
         $ConsultaPrincipal = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$iduser." ";
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
-                                while($data = mysqli_fetch_assoc($resqryUsuario)){      
+                                $data = mysqli_fetch_assoc($resqryUsuario);    
       ?>
           <tr style="text-align: center; vertical-align: middle; ">
           <td><?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></td>
@@ -257,12 +264,25 @@ Full screen Modal
             <td><?php echo $data['fecha_ingreso']; ?></td>
             <td><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
             <td><?php echo $data['DiasVac']; ?></td>
-            <td><?php echo $data['DiasVac']; ?></td>
+            
+              <td>
+              <?php
+              $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
+                  if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
+                      $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);  
+                      echo $dataCons02['DiasVacDisponibles'];                      
+                  }
+
+
+              
+
+              ?>
+              </td>
         
 
           </tr>
         <?php
-            }
+            
           }
       ?>
   </tbody>
@@ -348,7 +368,7 @@ Full screen Modal
 
 
   <!--SMALL MODAL-->
- <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
+ <div  class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-hidden="true">
                     <div class="modal-dialog modal-lg">
                       <div class="modal-content">
                         <div class="modal-header">
@@ -368,6 +388,46 @@ Full screen Modal
                     </div>
                   </div>
 <!--SMALL MODAL-->
+
+
+<div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Avisos</h3>
+     </div>
+         <div class="modal-body">
+            <h6>Bienvenido <?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></h6>
+            Tienes  <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> 
+
+            <?php
+
+        $qryConsulta01 = "SELECT COUNT (DiasVacAnt) as SiHayDias FROM `tbl_periodoanterior` where CodUsuario =  ".$iduser." ";
+     if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
+                                while($dataCons01 = mysqli_fetch_assoc($resQryConsulta01)){     
+                                    if($dataCons01['SiHayDias'] <> 0 ){
+
+                                        $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` where CodUsuario =  ".$iduser." ";
+                                            if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
+                                              $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
+                                                    $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
+
+                                                      echo " Con ".$DiasVacAntPHP." Dias del Periodo Anterior , Tienes 90 dias para solicitarlo  de lo contrario venceran";
+                                            }
+                                          
+                                    }
+                            }
+
+                        }
+            ?>
+     </div>
+         <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+     </div>
+      </div>
+   </div>
+</div>
 
 
 
@@ -505,6 +565,9 @@ Full screen Modal
   var res = parseInt(totaldias) - parseInt(diassol);
   document.getElementById("diasres").value = res;
   }
+
+
+
   </script>
 <!-- RESTA DIAS -->
 

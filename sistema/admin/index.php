@@ -186,30 +186,30 @@ Full screen Modal
  <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formusuario.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Crear Nuevo Usuario </button>
       <hr>
 
-      <table id="example2" class="display compact" style="width:100%" >
+      <table id="example2" class="stripe" style="width:100%" >
     <thead>
-          <tr>
+          <tr style="text-align: center; vertical-align: middle; font-size: 1em;">
           <th>Nombre</th>
           <th>Posicion</th>
           <th>Area</th>
           <th>Reporta a</th>
           <th>Jefe 2</th>
           <th>Fecha Ingreso</th>
-          <th>Antiguedad</th>
+          <th width="20%">Antiguedad</th>
+          <th>Dias Vacaciones Periodo Anterior</th>
           <th>Dias Vacaciones</th>
           <th>Dias Vacaciones x Disfrutar</th>
-           <th>Opciones</th>
+          <th>Opciones</th>
           </tr>
     </thead>
     <tbody>
       <?php
 
-        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu 
-INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu WHERE u.Estatus = 1 ";
+        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu  WHERE u.Estatus = 1 ORDER BY  u.CodUsuario DESC ";
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
-          <tr style="text-align: center; vertical-align: middle; ">
+          <tr style="text-align: center; vertical-align: middle; font-size: .8em; ">
           <td><?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></td>
           <td><?php echo $data['Posicion']; ?></td>
           <td><?php echo $data['Area']; ?></td>
@@ -222,10 +222,26 @@ INNER JOIN tbl_vacaciones_usuarioxanio as v ON v.CodEmpleado = e.CodUsu WHERE u.
                 }
           ?></td>
             <td><?php echo $data['Jefe2']; ?></td>
-            <td><?php echo $data['fecha_ingreso']; ?></td>
-            <td><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
+            <td><?php echo $data['fecha_ingreso']; ?></td>            
+            <td width="20%"><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
+             <td>
+                  <?php
+
+        $qryConsulta01 = "SELECT DiasVacAnt FROM tbl_periodoanterior where CodUsuario = ".$data['CodUsuario']." ";
+     if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
+                                while($dataCons01 = mysqli_fetch_assoc($resQryConsulta01)){     
+                                    echo $dataCons01['DiasVacAnt'];
+                            }
+
+                        }
+              ?>    
+             </td>
             <td><?php echo $data['DiasVac']; ?></td>
-            <td></td>
+
+            <td>
+
+            </td>
+
             <td>
               <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
         <br> <br>

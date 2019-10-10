@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-09-2019 a las 13:58:32
+-- Tiempo de generación: 10-10-2019 a las 08:04:38
 -- Versión del servidor: 10.3.15-MariaDB
 -- Versión de PHP: 7.3.6
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `vacaciones`
+-- Base de datos: `propulci_vacaciones`
 --
 
 -- --------------------------------------------------------
@@ -99,12 +99,28 @@ CREATE TABLE `tbl_empleados` (
 INSERT INTO `tbl_empleados` (`CodE`, `CodUsu`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `Posicion`, `Area`, `Reporta`, `Jefe2`, `fecha_ingreso`, `aniosA`, `mesesA`, `diasA`, `DiasVac`) VALUES
 (1, 1, 'Carlos', 'Michaus', 'Barcenas', 'TI', '1', '1', '1', '2017-02-01', 2, 7, 4, 8),
 (5, 5, 'Jairo Fernando', 'Paez', 'Mendieta', 'Director de Operaciones', 'Operaciones', '', '', '2013-03-07', 6, 6, 2, 14),
-(6, 6, 'Aline Mayela', 'Nolasco', 'Escalona', 'Administradora de Proyectos', 'Operaciones', '5', '', '2018-04-01', 1, 5, 9, 6),
-(7, 7, 'Adriana', 'VÃ©jar', 'GalvÃ¡n', 'Directora de AdministraciÃ³n y Finanzas', 'AdministraciÃ³n y Finanzas', '5', 'Adriana Lobo', '2019-01-15', 0, 7, 27, 0),
-(8, 8, 'Vladimir', 'Sosa', 'Rivas', 'Gerente de Electromovilidad para LatinoamÃ©rica', 'Movilidad Urbana', '5', 'Global', '2019-07-01', 0, 2, 10, 0),
-(9, 9, 'Yolanda', 'Romero', 'Ãvila', 'Asistente de DirecciÃ³n Operativa', 'Operaciones', '5', '', '2015-03-01', 4, 6, 10, 12),
-(10, 10, 'CÃ©sar Abraham', 'AvilÃ©s', 'CortÃ©s', 'Coordinador de InnovaciÃ³n', 'Operaciones', '5', '', '2018-09-07', 1, 0, 4, 6),
-(11, 11, 'Arianna', 'Ghibellini', 'Steixner', 'Gerente de Recursos Humanos', 'Operaciones', '5', 'Adriana Lobo', '2019-01-21', 0, 7, 21, 0);
+(16, 16, 'CARLOS VALENTIN', 'MICHAUS', 'BARCENAS', 'DESARROLLADOR WEB', 'SISTEMAS', '5', '', '2017-02-02', 2, 8, 7, 8),
+(17, 17, 'Wendy', 'Rodriguez', 'Ibarra', 'Auxiliar TI', 'TI', '5', '', '2018-05-02', 1, 5, 8, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tbl_periodoanterior`
+--
+
+CREATE TABLE `tbl_periodoanterior` (
+  `CodPeridoAnt` int(12) NOT NULL,
+  `CodUsuario` int(12) NOT NULL,
+  `PeriodoAnt` int(12) NOT NULL,
+  `DiasVacAnt` int(12) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tbl_periodoanterior`
+--
+
+INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`, `CodUsuario`, `PeriodoAnt`, `DiasVacAnt`) VALUES
+(3, 17, 2017, 2);
 
 -- --------------------------------------------------------
 
@@ -116,7 +132,11 @@ CREATE TABLE `tbl_rasolicitud` (
   `CodRAS` int(12) NOT NULL,
   `CodSol` int(12) NOT NULL,
   `Tipo` int(1) NOT NULL,
-  `Motivo` varchar(800) COLLATE utf8_unicode_ci NOT NULL
+  `Motivo` varchar(800) COLLATE utf8_unicode_ci NOT NULL,
+  `CodUsuario` int(12) DEFAULT NULL,
+  `FechaAR` date DEFAULT NULL,
+  `HoraAR` time DEFAULT NULL,
+  `EstatusSolicitud` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
@@ -138,13 +158,6 @@ CREATE TABLE `tbl_solicitud` (
   `TotaldiasVac` int(12) NOT NULL,
   `DiasRestantes` int(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Volcado de datos para la tabla `tbl_solicitud`
---
-
-INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `FechaInicio`, `FechaFin`, `Estatus`, `FechaAltaS`, `HoraAltaS`, `Periodo`, `DiasSolicitados`, `TotaldiasVac`, `DiasRestantes`) VALUES
-(1, 9, '2019-09-11', '2019-09-13', 2, '2019-09-11', '01:44:31', '11 al 13 de septiembre del 2019', 2, 0, -2);
 
 -- --------------------------------------------------------
 
@@ -170,12 +183,8 @@ CREATE TABLE `tbl_usuarios` (
 INSERT INTO `tbl_usuarios` (`CodUsuario`, `Usuario`, `Clave`, `Correo`, `Estatus`, `Perfil`, `Fecha_Alta`, `Hora_Alta`) VALUES
 (1, 'Admin', 'mtvf0ts=', 'c.michaus@gamil.com', 1, 1, '2019-09-05', '00:07:00'),
 (5, 'fernando.paez@wri.org', 'qdjl3OTU6s0=', 'michusvalentin@gmail.com', 1, 3, '2019-09-09', '22:35:34'),
-(6, 'aline.nolasco@wri.org', 'qdjl3OTU6s0=', 'michusvalentin@gmail.com', 1, 2, '2019-09-10', '01:07:41'),
-(7, 'adriana.vejar@wri.org', 'qdjl3OTU6s0=', 'adriana.vejar@wri.org', 1, 3, '2019-09-11', '00:04:10'),
-(8, 'vladimir.sosa@wri.org', 'qdjl3OTU6s0=', 'vladimir.sosa@wri.org', 1, 2, '2019-09-11', '00:08:07'),
-(9, 'yolanda.romero@wri.org', 'qdjl3OTU6s0=', 'yolanda.romero@wri.org', 1, 2, '2019-09-11', '00:11:21'),
-(10, 'cesar.aviles@wri.org', 'qdjl3OTU6s0=', 'cesar.aviles@wri.org', 1, 2, '2019-09-11', '00:13:50'),
-(11, 'arianna.ghibellini@wri.org', 'qdjl3OTU6s0=', 'arianna.ghibellini@wri.org', 1, 3, '2019-09-11', '00:31:02');
+(16, 'c.michaus', 'aq+jmaCa', 'michusvalentin@hotmail.com', 1, 2, '2019-10-09', '23:41:57'),
+(17, 'wroiba', 'sOnh0s/GqaI=', 'michusvalentin@gmail.com', 1, 2, '2019-10-10', '00:04:02');
 
 -- --------------------------------------------------------
 
@@ -212,12 +221,8 @@ CREATE TABLE `tbl_vacaciones_usuarioxanio` (
 
 INSERT INTO `tbl_vacaciones_usuarioxanio` (`CodVac`, `CodEmpleado`, `Anio`, `DiasVac`) VALUES
 (1, 5, 2019, 14),
-(2, 6, 2019, 6),
-(3, 7, 2019, 0),
-(4, 8, 2019, 0),
-(5, 9, 2019, 12),
-(6, 10, 2019, 6),
-(7, 11, 2019, 0);
+(12, 16, 2019, 8),
+(13, 17, 2019, 6);
 
 --
 -- Índices para tablas volcadas
@@ -234,6 +239,12 @@ ALTER TABLE `tbl_cat_vacaciones`
 --
 ALTER TABLE `tbl_empleados`
   ADD PRIMARY KEY (`CodE`);
+
+--
+-- Indices de la tabla `tbl_periodoanterior`
+--
+ALTER TABLE `tbl_periodoanterior`
+  ADD PRIMARY KEY (`CodPeridoAnt`);
 
 --
 -- Indices de la tabla `tbl_rasolicitud`
@@ -279,25 +290,31 @@ ALTER TABLE `tbl_cat_vacaciones`
 -- AUTO_INCREMENT de la tabla `tbl_empleados`
 --
 ALTER TABLE `tbl_empleados`
-  MODIFY `CodE` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `CodE` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT de la tabla `tbl_periodoanterior`
+--
+ALTER TABLE `tbl_periodoanterior`
+  MODIFY `CodPeridoAnt` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_rasolicitud`
 --
 ALTER TABLE `tbl_rasolicitud`
-  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_solicitud`
 --
 ALTER TABLE `tbl_solicitud`
-  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_usuarios`
 --
 ALTER TABLE `tbl_usuarios`
-  MODIFY `CodUsuario` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `CodUsuario` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_vacaciones`
@@ -309,7 +326,7 @@ ALTER TABLE `tbl_vacaciones`
 -- AUTO_INCREMENT de la tabla `tbl_vacaciones_usuarioxanio`
 --
 ALTER TABLE `tbl_vacaciones_usuarioxanio`
-  MODIFY `CodVac` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `CodVac` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

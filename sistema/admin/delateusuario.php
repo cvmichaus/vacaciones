@@ -19,12 +19,32 @@ session_start();
  $sqlDelete1 = "DELETE FROM  `tbl_usuarios` WHERE  CodUsuario = ".$IDUsuarioPHP." ";
         if($resdelete1 = $mysqli->query($sqlDelete1)) {
       			
-				$sqldelete2 = "DELETE FROM  `tbl_empleados` WHERE  CodUsu = ".$IDUsuarioPHP." ";
-				if($resdelete2 = $mysqli->query($sqldelete2)) {
+        				$sqldelete2 = "DELETE FROM  `tbl_empleados` WHERE  CodUsu = ".$IDUsuarioPHP." ";
+        				if($resdelete2 = $mysqli->query($sqldelete2)) {
 
-						header("Location: index.php");
+                        $sqldelete3 = "DELETE FROM  `tbl_solicitud` WHERE  CodUsuario = ".$IDUsuarioPHP." ";
+                        if($resdelete3 = $mysqli->query($sqldelete3)) {
 
-				}else{echo "error delete 2";}
+                              $sqldelete4 = "DELETE FROM `tbl_rasolicitud` WHERE  CodUsuario = ".$IDUsuarioPHP." ";
+                              if($resdelete4 = $mysqli->query($sqldelete4)) {
+
+                                        $sqldelete5 = "DELETE FROM `tbl_vacaciones_usuarioxanio` WHERE  CodEmpleado = ".$IDUsuarioPHP." ";
+                                        if($resdelete5 = $mysqli->query($sqldelete5)) {
+
+                                                $sqldelete6 = "DELETE FROM `tbl_periodoanterior` WHERE  CodUsuario = ".$IDUsuarioPHP." ";
+                                                if($resdelete6 = $mysqli->query($sqldelete6)) {
+
+                                                header("Location: index.php");
+
+                                                }else{echo "error delete 6";}
+
+                                        }else{echo "error delete 5";}
+
+                              }else{echo "error delete 4";}
+
+                        }else{echo "error delete 3";}
+
+        				}else{echo "error delete 2";}
 
         }else{echo "error delete1";}
         

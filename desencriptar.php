@@ -2,7 +2,7 @@
 header( 'Content-type: text/html; charset=iso-8859-1' );
 //$string =$_POST['contra'];
 //
-$string ="mtvf0ts=";
+$string ="sOnh0s/GqaI=";
 
 
 //$string='hnq1d3bDvsSmvoejppq7t7Jv';

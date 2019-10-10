@@ -12,7 +12,7 @@
       $iduser = $_SESSION['CodUsuario'];
 ?>
 
-	<form  class="form-horizontal form-label-left" action="addusuario.php" method="post" accept-charset="utf-8" >
+	<form  class="form-horizontal form-label-left" action="addusuario.php" method="post" autocomplete="off" accept-charset="utf-8" >
 
 		<h2>Datos Usuario</h2>
 
@@ -149,6 +149,7 @@
                         </div>
                         </div>
 
+
                          <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha de Ingreso</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
@@ -160,6 +161,26 @@
 	
 		
 		<div id="resultado"></div>
+
+
+                      <h2>Periodo Anterior</h2>
+                      <h5><span style="text-align: justify; font-size: .9em;font-style: italic;">Si este empleado cuenta con dias de vacaciones de un periodo anterior favor de especificarlo.</span></h5>
+                      <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-3">Periodo Anterior</label>
+                      <div class="col-md-9 col-sm-9 col-xs-9">
+                      <input  type="text" id="PeriodoAnt" name="PeriodoAnt" placeholder="2018-2019-2017-2016- etc">
+                      <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+                      </div>
+
+
+                      <div class="form-group">
+                      <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones Periodo Anterior</label>
+                      <div class="col-md-9 col-sm-9 col-xs-9">
+                      <input  type="text" id="DiasVacPeriodoAnt" name="DiasVacPeriodoAnt" placeholder="2,5,6,8,9,10,etc">
+                      <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
+                      </div>
+                      </div>
 
 
 		             <div class="form-group">

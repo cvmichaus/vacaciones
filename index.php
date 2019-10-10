@@ -97,7 +97,7 @@ body {
             
           </div>
           <h3>Bienvenido</h3>
-                <form method="POST"  action="session_init.php">
+                <form method="POST"  action="session_init.php" autocomplete="off">
                 <div class="form-group">
                 <input type="text" class="form-control" name="usuario" id="usuario" placeholder="Username">
                 </div>
