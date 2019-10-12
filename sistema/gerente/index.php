@@ -22,19 +22,18 @@ session_start();
     <meta name="description" content="">
 
 
+
 <!--<script src="//code.jquery.com/jquery-3.4.1.min.js" ></script>-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <!--
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 -->
 <!--<script type="text/javascript" charset="utf8" src=""></script>-->
-<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -46,6 +45,13 @@ session_start();
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+
+<script type="text/javascript" language="javascript" class="init">
+   $(document).ready(function()
+   {
+      $("#mostrarmodal").modal("show");
+   });
+</script>
 
 
 <script type="text/javascript" language="javascript" class="init">
@@ -342,7 +348,51 @@ Full screen Modal
                   </div>
 <!--SMALL MODAL-->
 
+<div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>Avisos</h3>
+     </div>
+         <div class="modal-body">
+            <h6>Bienvenido <?php echo $user; ?></h6>
+            Tienes las siguientes solicitudes:<br>
 
+      <?php
+
+        $sqlUsuarioS2 = "SELECT * FROM `tbl_solicitud` s 
+                INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario
+                WHERE e.Reporta = ".$iduser." AND s.Estatus = '2' ORDER BY s.CodSol DESC ";
+                           if($resqryUsuarios2 = $mysqli->query($sqlUsuarioS2)) {
+                                while($row2 = mysqli_fetch_assoc($resqryUsuarios2)){  
+
+
+                                                    $ConsultaPrincipal2 = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$row2['CodUsuario']." ";
+                                                    if($resqryUsuario2 = $mysqli->query($ConsultaPrincipal2)) {
+                                                    $data22 = mysqli_fetch_assoc($resqryUsuario2);   
+                                                    $sqlObtenerU = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data22['CodUsu']."  ";
+                                                    if($resqry22 = $mysqli->query($sqlObtenerU)) {
+                                                    while($rowEmp2 = mysqli_fetch_assoc($resqry22)){  
+                                                    echo $rowEmp2['Nombres']; echo " "; echo $rowEmp2['ApellidoPaterno']; echo " "; echo $rowEmp2['ApellidoMaterno']; echo "<br>";
+                                                    }
+                                                    }
+
+                                                    }
+
+
+                                } 
+
+                              }
+      ?>
+          
+     </div>
+         <div class="modal-footer">
+        <a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>
+     </div>
+      </div>
+   </div>
+</div>
 
     <hr>
 

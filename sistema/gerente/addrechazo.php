@@ -76,68 +76,74 @@ session_start();
                          $consulta3 = "UPDATE `tbl_vacaciones_usuarioxanio`  SET `DiasVac` = ".$total." WHERE  CodEmpleado = ".$_POST["CodEmpleado"]." ";  
                                     if($resultado3 = $mysqli->query($consulta3)) {
 
+                                        /*envia correo*/
 
 
-
-                           require("../PHPMailer-master/src/PHPMailer.php");
-                          require("../PHPMailer-master/src/SMTP.php");
-                          require("../PHPMailer-master/src/Exception.php");
-
-
-                          $mail = new PHPMailer\PHPMailer\PHPMailer();
-                          $mail->IsSMTP(); 
-
-                          $mail->CharSet="UTF-8";
-                           $mail->Host = "smtp.office365.com";
-                          //$mail->SMTPDebug = 2; 
-                          $mail->Port = 587; //465 or 587
-
-                          $mail->SMTPSecure = 'tls';  
-                          $mail->SMTPAuth = true; 
-                          $mail->IsHTML(true);
-
-                          //Authentication
-                           $mail->Username = "recursos.humanos@wri.org";
-                          $mail->Password = "WRIm3x1c086!";
-
-                          //Set Params
-                          $mail->SetFrom("recursos.humanos@wri.org");
-                          $mail->AddAddress($CorreoEmpleado2);
-                          $mail->AddAddress("michusvalentin@hotmail.com");
-                     
-
-                          $mail->Subject = "Solicitud de Vacaciones Aprobada";
-                          $mail->Body = '
-                          <html>
-                          <head>
-                          <title>Bienvenido</title>
-                          </head>
-                          <body>
-                          <h1>
-                          Notificacion de Solicitud de Vacaciones Apropbada:
-                          </h1>
-                          <p>
-                          
-              Hola estimado Usuario  tu solicitud ha sido aprobada <br>
-              Para revisar tus dias restantes segir el siguiente link:
-                          <br>
-                          http:localhost/sistemadevacaciones/index.php
-                          </p>
-                          </body>
-                          </html>
-                          ';
+                                require("../PHPMailer-master/src/PHPMailer.php");
+                                require("../PHPMailer-master/src/SMTP.php");
+                                require("../PHPMailer-master/src/Exception.php");
 
 
-                          if(!$mail->Send()) {
-                          // echo "Mailer Error: " . $mail->ErrorInfo;
-                          echo "Error al enviar Mensaje";
-                          } else {
-                              
-                              header("Location: index.php");  
-                             
-                    
-                          }
-                                        
+                                $mail3 = new PHPMailer\PHPMailer\PHPMailer();
+                                $mail3->IsSMTP(); 
+
+                                $mail3->CharSet="UTF-8";
+                                $mail3->Host = "smtp.gmail.com";
+                                //$mail3->Host = "smtp.office365.com";
+                                //$mail3->SMTPDebug = 2; 
+                                $mail3->Port = 587; //465 or 587
+
+                                $mail3->SMTPSecure = 'tls';  
+                                $mail3->SMTPAuth = true; 
+                                $mail3->IsHTML(true);
+
+                                //Authentication
+                                $mail3->Username = "vacacioneswrimexico@gmail.com";
+                                $mail3->Password = "Rueville10!";
+                                //$mail3->Username = "recursos.humanos@wri.org";
+                                // $mail3->Password = "WRIm3x1c086!";
+
+                                //Set Params
+                                $mail3->SetFrom("vacacioneswrimexico@gmail.com");
+                                //$mail3->AddAddress($CorreoEmpleado2);
+                                $mail3->AddAddress($CorreoEmpleado);
+
+
+                                $mail3->Subject = "Solicitud de Vacaciones Aprobada";
+                                $mail3->Body = '
+                                <html>
+                                <head>
+                                <title>Bienvenido</title>
+                                </head>
+                                <body>
+                                <h1>
+                                Notificacion de Solicitud de Vacaciones Apropbada:
+                                </h1>
+                                <p>
+
+                                Hola estimado Usuario  tu solicitud ha sido aprobada <br>
+                                Para revisar tus dias restantes segir el siguiente link:
+                                <br>
+                                http:localhost/sistemadevacaciones/index.php
+                                </p>
+
+                                </body>
+                                </html>
+                                ';
+
+
+                                if(!$mail3->Send()) {
+                                // echo "Mailer Error: " . $mail->ErrorInfo;
+                                echo "Error al enviar Mensaje";
+                                } else {
+
+                                //header("Location: index.php");  
+
+                                header("Location: index.php");  
+
+                                }
+
+          
                                     }else{
                                          ECHO "ERROR";
                                          echo mysql_errno($consulta3);
@@ -167,62 +173,72 @@ session_start();
                       $consulta2 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";             
                       if($resultado2 = $mysqli->query($consulta2)) {
 
-                                  require("../PHPMailer-master/src/PHPMailer.php");
-                          require("../PHPMailer-master/src/SMTP.php");
-                          require("../PHPMailer-master/src/Exception.php");
+
+                              /*envia correo*/
+
+                                require("../PHPMailer-master/src/PHPMailer.php");
+                                require("../PHPMailer-master/src/SMTP.php");
+                                require("../PHPMailer-master/src/Exception.php");
 
 
-                          $mail = new PHPMailer\PHPMailer\PHPMailer();
-                          $mail->IsSMTP(); 
+                                $mail4 = new PHPMailer\PHPMailer\PHPMailer();
+                                $mail4->IsSMTP(); 
 
-                          $mail->CharSet="UTF-8";
-                           $mail->Host = "smtp.office365.com";
-                          //$mail->SMTPDebug = 2; 
-                          $mail->Port = 587; //465 or 587
+                                $mail4->CharSet="UTF-8";
+                                $mail4->Host = "smtp.gmail.com";
+                                //$mail4->Host = "smtp.office365.com";
+                                //$mail4->SMTPDebug = 2; 
+                                $mail4->Port = 587; //465 or 587
 
-                          $mail->SMTPSecure = 'tls';  
-                          $mail->SMTPAuth = true; 
-                          $mail->IsHTML(true);
+                                $mail4->SMTPSecure = 'tls';  
+                                $mail4->SMTPAuth = true; 
+                                $mail4->IsHTML(true);
 
-                          //Authentication
-                           $mail->Username = "recursos.humanos@wri.org";
-                          $mail->Password = "WRIm3x1c086!";
+                                //Authentication
+                                $mail4->Username = "vacacioneswrimexico@gmail.com";
+                                $mail4->Password = "Rueville10!";
+                                //$mail4->Username = "recursos.humanos@wri.org";
+                                // $mail4->Password = "WRIm3x1c086!";
 
-                          //Set Params
-                          $mail->SetFrom("recursos.humanos@wri.org");
-                          $mail->AddAddress($CorreoEmpleado);
-              $mail->AddAddress("michusvalentin@hotmail.com");
-                     
-
-                          $mail->Subject = "Solicitud de Vacaciones Rechazada";
-                          $mail->Body = '
-                          <html>
-                          <head>
-                          <title>Bienvenido</title>
-                          </head>
-                          <body>
-                          <h1>
-                          Notificacion de Solicitud de Vacaciones Rechazada:
-                          </h1>
-                          <p>
-                          
-              Hola estimado Usuario  tu solicitud ha sido rechazada <br>
-              Para revisar el motivo entrar al siguiente link:
-                          <br>
-                          http:localhost/sistemadevacaciones/index.php
-                          </p>
-                          </body>
-                          </html>
-                          ';
+                                //Set Params
+                                $mail4->SetFrom("vacacioneswrimexico@gmail.com");
+                                //$mail4->AddAddress($CorreoEmpleado2);
+                                 $mail4->AddAddress($CorreoEmpleado);
 
 
-                          if(!$mail->Send()) {
-                          // echo "Mailer Error: " . $mail->ErrorInfo;
-                          echo "Error al enviar Mensaje";
-                          } else {
-                          //$alerta = "guardado";
-                           header("Location: index.php");  
-                          }
+                                $mail4->Subject = "Solicitud de Vacaciones Rechazada";
+                                $mail4->Body = '
+                                <html>
+                                <head>
+                                <title>Bienvenido</title>
+                                </head>
+                                <body>
+                                <h1>
+                                Notificacion de Solicitud de Vacaciones Rechazada:
+                                </h1>
+                                <p>
+
+                                 Hola estimado Usuario  tu solicitud ha sido rechazada <br>
+                                  Para revisar el motivo entrar al siguiente link:
+                                <br>
+                                http:localhost/sistemadevacaciones/index.php
+                                </p>
+
+                                </body>
+                                </html>
+                                ';
+
+
+                                if(!$mail4->Send()) {
+                                // echo "Mailer Error: " . $mail->ErrorInfo;
+                                echo "Error al enviar Mensaje";
+                                } else {
+
+                                //header("Location: index.php");  
+
+                                header("Location: index.php");  
+
+                                }
 
                       }
 

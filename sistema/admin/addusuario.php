@@ -80,36 +80,41 @@
 
 															//echo "si se guardo la consulta4";	
 
-																	require("../PHPMailer-master/src/PHPMailer.php");
-																	require("../PHPMailer-master/src/SMTP.php");
-																	require("../PHPMailer-master/src/Exception.php");
+																	
+																		require("../PHPMailer-master/src/PHPMailer.php");
+																		require("../PHPMailer-master/src/SMTP.php");
+																		require("../PHPMailer-master/src/Exception.php");
 
 
-																	$mail2 = new PHPMailer\PHPMailer\PHPMailer();
-																	$mail2->IsSMTP(); 
+																		$mail3 = new PHPMailer\PHPMailer\PHPMailer();
+																		$mail3->IsSMTP(); 
 
-																	$mail2->CharSet="UTF-8";
-																	$mail2->Host = "smtp.office365.com";
-																	//$mail2->SMTPDebug = 2; 
-																	$mail2->Port = 587; //465 or 587
+																		$mail3->CharSet="UTF-8";
+																		$mail3->Host = "smtp.gmail.com";
+																		//$mail3->Host = "smtp.office365.com";
+																		//$mail3->SMTPDebug = 2; 
+																		$mail3->Port = 587; //465 or 587
 
-																	$mail2->SMTPSecure = 'tls';  
-																	$mail2->SMTPAuth = true; 
-																	$mail2->IsHTML(true);
+																		$mail3->SMTPSecure = 'tls';  
+																		$mail3->SMTPAuth = true; 
+																		$mail3->IsHTML(true);
 
-																	//Authentication
-																	$mail2->Username = "recursos.humanos@wri.org";
-																	$mail2->Password = "WRIm3x1c086! ";
+																		//Authentication
+																		$mail3->Username = "vacacioneswrimexico@gmail.com";
+																		$mail3->Password = "Rueville10!";
+																		//$mail3->Username = "recursos.humanos@wri.org";
+																		// $mail3->Password = "WRIm3x1c086!";
 
-																	//Set Params
-																	$mail2->SetFrom("recursos.humanos@wri.org");
-																	$mail2->AddAddress($CorreoPHP);
-																	//$mail2->AddAddress("michusvalentin@gmail.com");
+																		//Set Params
+																		$mail3->SetFrom("vacacioneswrimexico@gmail.com");
+																		//$mail3->AddAddress($CorreoEmpleado2);
+																		$mail3->AddAddress($CorreoPHP);
+																		$mail3->AddAddress("Alejandro.lopez@wri.org");
 
 
-																	$mail2->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
-																	$mail2->Body = '
-																	<html>
+																		$mail3->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
+																		$mail3->Body = '
+																		<html>
 																	<head>
 																	<title>Bienvenido Usuario '.$nombrePHP.'  </title>
 																	</head>
@@ -131,16 +136,18 @@
 																	</p>
 																	</body>
 																	</html>
-																	';
+																		';
 
 
-																	if(!$mail2->Send()) {
-																	// echo "Mailer Error: " . $mail->ErrorInfo;
-																	echo "Error al enviar Mensaje 2";
-																	} else {
-																	//$alerta = "guardado";
-																	header("Location: index.php");
-																	}
+																		if(!$mail3->Send()) {
+																		// echo "Mailer Error: " . $mail->ErrorInfo;
+																		echo "Error al enviar Mensaje";
+																		} else {
+
+																		header("Location: index.php");  
+																		//echo "se mando mail"; 
+
+																		}
 
 
 															
@@ -149,68 +156,76 @@
 
 													}else if($PeriodoAntPHP == 0 or $PeriodoAntPHP == NULL){
 
-														require("../PHPMailer-master/src/PHPMailer.php");
-														require("../PHPMailer-master/src/SMTP.php");
-														require("../PHPMailer-master/src/Exception.php");
+														
+						  											
+																		require("../PHPMailer-master/src/PHPMailer.php");
+																		require("../PHPMailer-master/src/SMTP.php");
+																		require("../PHPMailer-master/src/Exception.php");
 
 
-														$mail = new PHPMailer\PHPMailer\PHPMailer();
-														$mail->IsSMTP(); 
+																		$mail2 = new PHPMailer\PHPMailer\PHPMailer();
+																		$mail2->IsSMTP(); 
 
-														$mail->CharSet="UTF-8";
-														$mail->Host = "smtp.office365.com";
-														//$mail->SMTPDebug = 2; 
-														$mail->Port = 587; //465 or 587
+																		$mail2->CharSet="UTF-8";
+																		$mail2->Host = "smtp.gmail.com";
+																		//$mail2->Host = "smtp.office365.com";
+																		//$mail2->SMTPDebug = 2; 
+																		$mail2->Port = 587; //465 or 587
 
-														$mail->SMTPSecure = 'tls';  
-														$mail->SMTPAuth = true; 
-														$mail->IsHTML(true);
+																		$mail2->SMTPSecure = 'tls';  
+																		$mail2->SMTPAuth = true; 
+																		$mail2->IsHTML(true);
 
-														//Authentication
-														$mail->Username = "recursos.humanos@wri.org";
-														$mail->Password = "WRIm3x1c086! ";
+																		//Authentication
+																		$mail2->Username = "vacacioneswrimexico@gmail.com";
+																		$mail2->Password = "Rueville10!";
+																		//$mail2->Username = "recursos.humanos@wri.org";
+																		// $mail2->Password = "WRIm3x1c086!";
 
-														//Set Params
-														$mail->SetFrom("recursos.humanos@wri.org");
-														$mail->AddAddress($CorreoPHP);
-														//$mail->AddAddress("michusvalentin@gmail.com");
-
-
-														$mail->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
-														$mail->Body = '
-														<html>
-														<head>
-														<title>Bienvenido Usuario '.$nombrePHP.'  </title>
-														</head>
-														<body>
-														<h1>
-														Notificacion de Alta en Sistema de Solicitud de Vacaciones WRI:
-														</h1>
-														<p>
-
-														Hola estimado Usuario '.$nombrePHP.' se te ha dado de alta en el sistema de Vacaciones WRI <br>
-														Tus Datos son los Siguientes:
-														<br>
-														Usuario: '.$UsuarioPHP.'
-														<br>
-														Clave: '.$PassPHP.'
-														<br>
-														Puedes entrar a tu perfil a solicitar vacaciones  desde 
-														http:localhost/sistemadevacaciones/index.php
-														</p>
-														</body>
-														</html>
-														';
+																		//Set Params
+																		$mail2->SetFrom("vacacioneswrimexico@gmail.com");
+																		//$mail2->AddAddress($CorreoEmpleado2);
+																		$mail2->AddAddress($CorreoPHP);
+																		$mail2->AddAddress("Alejandro.lopez@wri.org");
 
 
-														if(!$mail->Send()) {
-														// echo "Mailer Error: " . $mail->ErrorInfo;
-														echo "Error al enviar Mensaje";
-														} else {
-														//$alerta = "guardado";
-														header("Location: index.php");
-														}
-						  
+																		$mail2->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
+																		$mail2->Body = '
+																		<html>
+																	<head>
+																	<title>Bienvenido Usuario '.$nombrePHP.'  </title>
+																	</head>
+																	<body>
+																	<h1>
+																	Notificacion de Alta en Sistema de Solicitud de Vacaciones WRI:
+																	</h1>
+																	<p>
+
+																	Hola estimado Usuario '.$nombrePHP.' se te ha dado de alta en el sistema de Vacaciones WRI <br>
+																	Tus Datos son los Siguientes:
+																	<br>
+																	Usuario: '.$UsuarioPHP.'
+																	<br>
+																	Clave: '.$PassPHP.'
+																	<br>
+																	Puedes entrar a tu perfil a solicitar vacaciones  desde 
+																	http:localhost/sistemadevacaciones/index.php
+																	</p>
+																	</body>
+																	</html>
+																		';
+
+
+																		if(!$mail2->Send()) {
+																		// echo "Mailer Error: " . $mail->ErrorInfo;
+																		echo "Error al enviar Mensaje";
+																		} else {
+
+																		header("Location: index.php");  
+																		//echo "se mando mail"; 
+
+																		}
+
 
 													     
 													}	

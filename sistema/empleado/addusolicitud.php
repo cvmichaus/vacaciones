@@ -33,62 +33,71 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
 								$CorreoReporta = $_POST["CorreoReporta"];
 							
 
-                          require("../PHPMailer-master/src/PHPMailer.php");
-                          require("../PHPMailer-master/src/SMTP.php");
-                          require("../PHPMailer-master/src/Exception.php");
-
-
-                          $mail = new PHPMailer\PHPMailer\PHPMailer();
-                          $mail->IsSMTP(); 
-
-                          $mail->CharSet="UTF-8";
-                           $mail->Host = "smtp.office365.com";
-                          //$mail->SMTPDebug = 2; 
-                          $mail->Port = 587; //465 or 587
-
-                          $mail->SMTPSecure = 'tls';  
-                          $mail->SMTPAuth = true; 
-                          $mail->IsHTML(true);
-
-                          //Authentication
-                           $mail->Username = "recursos.humanos@wri.org";
-                          $mail->Password = "WRIm3x1c086!";
-
-                          //Set Params
-                          $mail->SetFrom("recursos.humanos@wri.org");
-                          $mail->AddAddress($CorreoEmpleado);
-                          $mail->AddAddress($CorreoReporta);
-						              $mail->AddAddress("michusvalentin@gmail.com");
-                     
-
-                          $mail->Subject = "Solicitud de Vacaciones";
-                          $mail->Body = '
-                          <html>
-                          <head>
-                          <title>Bienvenido</title>
-                          </head>
-                          <body>
-                          <h1>
-                          Notificacion de Solicitud de Vacaciones:
-                          </h1>
-                          <p>
-                          
-						  Hola estimado Gerente del Area el empleado '.$_POST['NombreEmpleado'].' a solicitado vacaciones '.$_POST['periodo'].' <br>
-						  Para aprobar o rechazar las vacaciones favor de segir el siguiente link:
-                          <br>
                          
-                          </p>
-                          </body>
-                          </html>
-                          ';
+            require("../PHPMailer-master/src/PHPMailer.php");
+            require("../PHPMailer-master/src/SMTP.php");
+            require("../PHPMailer-master/src/Exception.php");
 
 
-                          if(!$mail->Send()) {
-                          // echo "Mailer Error: " . $mail->ErrorInfo;
-                          echo "Error al enviar Mensaje";
-                          } else {
-                          $alerta = "guardado";
-                          }
+            $mail3 = new PHPMailer\PHPMailer\PHPMailer();
+            $mail3->IsSMTP(); 
+
+            $mail3->CharSet="UTF-8";
+            $mail3->Host = "smtp.gmail.com";
+            //$mail3->Host = "smtp.office365.com";
+            //$mail3->SMTPDebug = 2; 
+            $mail3->Port = 587; //465 or 587
+
+            $mail3->SMTPSecure = 'tls';  
+            $mail3->SMTPAuth = true; 
+            $mail3->IsHTML(true);
+
+            //Authentication
+            $mail3->Username = "vacacioneswrimexico@gmail.com";
+            $mail3->Password = "Rueville10!";
+            //$mail3->Username = "recursos.humanos@wri.org";
+           // $mail3->Password = "WRIm3x1c086!";
+
+            //Set Params
+            $mail3->SetFrom("vacacioneswrimexico@gmail.com");
+            //$mail3->AddAddress($CorreoEmpleado2);
+              $mail3->AddAddress($CorreoEmpleado);
+              $mail3->AddAddress($CorreoReporta);
+              $mail3->AddAddress("Alejandro.lopez@wri.org");
+       
+
+
+            $mail3->Subject = "Solicitud de Vacaciones";
+            $mail3->Body = '
+              <html>
+              <head>
+              <title>Bienvenido</title>
+              </head>
+              <body>
+              <h1>
+              Notificacion de Solicitud de Vacaciones:
+              </h1>
+              <p>
+
+              Hola estimado Gerente del Area el empleado '.$_POST['NombreEmpleado'].' a solicitado vacaciones '.$_POST['periodo'].' <br>
+              Para aprobar o rechazar las vacaciones favor de segir el siguiente link: localhost/sistemadevacaciones/index.php
+              <br>
+
+              </p>
+              </body>
+              </html>
+            ';
+
+
+            if(!$mail3->Send()) {
+            // echo "Mailer Error: " . $mail->ErrorInfo;
+            echo "Error al enviar Mensaje";
+            } else {
+
+            //header("Location: index.php");  
+             echo "se mando mail"; 
+
+            }
 						  
 						  
 						  
