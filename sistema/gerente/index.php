@@ -24,11 +24,11 @@ session_start();
 
 
 <!--<script src="//code.jquery.com/jquery-3.4.1.min.js" ></script>-->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="../sistema/bootstrap/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="../sistema/jquery/js/jquery-3.2.1.min"  crossorigin="anonymous"></script>
+<script src="../sistema/bootstrap/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="../sistema/bootstrap/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <!--
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
@@ -324,6 +324,79 @@ Full screen Modal
                     </table>
 
 <hr>
+
+
+      <!--TABLA DE SOLICITUDES DE VACACIONES-->
+          <div class="row">
+
+            <div class="col-md-12 col-sm-12 col-xs-12">
+              <div class="dashboard_graph">
+                    <h2>Solicitud de Vacaciones </h2>
+                     <table id="example3" class="table table-striped table-bordered " cellspacing="0" width="100%">
+                      <thead>
+                        <tr>
+                         <th>Cod Solicitud</th>
+                          <th>Usuario</th>
+                          <th>Fecha Inicio</th>
+                          <th>Fecha Fin</th>
+                          <th>Dias Solicitados</th>
+                         
+               <th>Estatus</th>
+             
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+  $sqlUsuarioS = "SELECT * FROM `tbl_solicitud` u WHERE  u.CodUsuario = ".$iduser." ";
+                           if($resqryUsuarios = $mysqli->query($sqlUsuarioS)) {
+                                while($row = mysqli_fetch_assoc($resqryUsuarios)){  
+                      ?>
+                        <tr>
+                         
+                          <td><?php echo $row['CodSol']; ?></td>
+                          <td><?php //echo $row['CodUsuario'];
+
+          $sqlU = "SELECT * FROM `tbl_usuarios` as u INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodE  WHERE  u.CodUsuario = ".$row['CodUsuario']."  ";
+                if($resqryU = $mysqli->query($sqlU)) {
+                while($dataU = mysqli_fetch_assoc($resqryU)){  
+                echo $dataU['Nombres']; echo " "; echo $dataU['ApellidoPaterno']; echo " "; echo $dataU['ApellidoMaterno'];
+                  }
+                }
+
+                           ?></td>
+                          <td><?php echo $row['FechaInicio']; ?></td>
+                          <td><?php echo $row['FechaFin']; ?></td>
+                           <td><?php echo $row['DiasSolicitados']; ?></td>
+                         
+              <td>
+              <?php 
+               $EstatusPHP = $row['Estatus'];
+                if($EstatusPHP == 0 )
+                { echo "Rechazado ";}
+                else if($EstatusPHP == 1){ 
+                echo "APROBADO";}
+                else if($EstatusPHP == 2){ 
+                echo "PROCESO";}
+                else {echo "NA";}
+              ?>
+              </td>
+
+
+
+                        </tr>
+                       <?php
+                          }
+                        }
+                       ?>
+                      </tbody>
+                    </table>
+    
+                
+              </div>
+            </div>
+
+          </div>
+
 
 
   <!--SMALL MODAL-->
