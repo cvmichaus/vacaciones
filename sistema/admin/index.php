@@ -230,9 +230,9 @@ Full screen Modal
 
         $qryConsulta01 = "SELECT DiasVacAnt FROM tbl_periodoanterior where CodUsuario = ".$data['CodUsuario']." ";
      if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
-                                while($dataCons01 = mysqli_fetch_assoc($resQryConsulta01)){     
+                                $dataCons01 = mysqli_fetch_assoc($resQryConsulta01);   
                                     echo $dataCons01['DiasVacAnt'];
-                            }
+                            
 
                         }
               ?>    
