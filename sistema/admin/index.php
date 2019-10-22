@@ -206,7 +206,7 @@ Full screen Modal
     <tbody>
       <?php
 
-        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as e ON u.CodUsuario = e.CodUsu  WHERE u.Estatus = 1 ORDER BY  u.CodUsuario DESC ";
+        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as E ON u.CodUsuario = E.CodUsu  WHERE u.Estatus = 1 ORDER BY  u.CodUsuario DESC ";
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
