@@ -14,7 +14,7 @@ session_start();
 	  
 ?>
 
-<form class="form-horizontal form-label-left" action="addusolicitud.php" method="post">
+<form class="form-horizontal form-label-left" action="addusolicitud.php" method="post" name="formulario">
      <input id="CodEmpleado" name="CodEmpleado" type="hidden" value="<?php echo $iduser; ?>">
                         
 						<div class="form-group">
@@ -36,17 +36,21 @@ session_start();
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha Final</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input id="datefin" name="datefin" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask=""  min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>"  onblur="obtenerfechas();">
+                        <input id="datefin" name="datefin" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask=""  min="<?php echo date("Y-m-d");?>" value="<?php echo date("Y-m-d");?>"  onblur="enviarDatos();">
+              
+                        <!--onblur="obtenerfechas();-->
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
+                          
 
-						
+                        
 							
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Solicitados </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-						<input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" onblur="restadias();">
+
+						        <input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" onblur="restadias();">
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>

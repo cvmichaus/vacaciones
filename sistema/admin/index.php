@@ -25,7 +25,11 @@ session_start();
 <!--<script src="//code.jquery.com/jquery-3.4.1.min.js" ></script>-->
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<!--
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
@@ -46,6 +50,104 @@ session_start();
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css">
   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css">
+
+
+  <script>
+
+  function validarPasswd(){
+
+
+    var p1 = document.getElementById("passwd").value;
+    var p2 = document.getElementById("passwd2").value;
+
+        var espacios = false;
+    var cont = 0;
+     
+    while (!espacios && (cont < p1.length)) {
+      if (p1.charAt(cont) == " ")
+        espacios = true;
+      cont++;
+    }
+     
+    if (espacios) {
+      alert ("La contraseña no puede contener espacios en blanco");
+      return false;
+    }
+
+        if (p1.length == 0 || p2.length == 0) {
+      alert("Los campos de la password no pueden quedar vacios");
+      return false;
+    }
+
+        if (p1 != p2) {
+      alert("Las passwords deben de coincidir");
+      return false;
+    } else {
+      //alert("Todo esta correcto");
+      return true; 
+    }
+
+}
+
+</script>
+
+  <script>
+    /*PRECARGAR DATOS EN SELCT */
+    function CargaAntiguedad(str)
+    {
+    if (str=="")
+    {
+    document.getElementById("resultado").innerHTML="";
+    return;
+    }
+    if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+    }
+    else
+    {// code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    xmlhttp.onreadystatechange=function()
+    {
+    if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    {
+    document.getElementById("resultado").innerHTML=xmlhttp.responseText;
+    }
+    }
+    xmlhttp.open("GET","obtener_antiguedad.php?y="+str,true);
+    xmlhttp.send();
+    }  
+
+    </script>
+
+
+    <script>
+      function ejecuta_ajax(archivo, parametros, capa){
+        if (window.XMLHttpRequest)
+        {// code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp=new XMLHttpRequest();
+        }
+        else
+        {// code for IE6, IE5
+        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange=function()
+        {
+        if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        {
+        document.getElementById(capa).innerHTML=xmlhttp.responseText;
+        }
+        }
+
+        x = Math.random()*99999999;
+        xmlhttp.open("GET",archivo+"?"+parametros+"&x="+x, true);
+        xmlhttp.send();
+        }
+
+   </script>
 
 
 <script type="text/javascript" language="javascript" class="init">
@@ -206,7 +308,13 @@ Full screen Modal
     <tbody>
       <?php
 
-        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,E.diasA,E.mesesA,E.aniosA,E.DiasVac FROM `tbl_usuarios` as u INNER JOIN tbl_empleados as E ON u.CodUsuario = E.CodUsu  WHERE u.Estatus = 1 ORDER BY  u.CodUsuario DESC ";
+        $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,
+        E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,
+        E.diasA,E.mesesA,E.aniosA,E.DiasVac  FROM `tbl_usuarios` as u 
+        INNER JOIN tbl_empleados as E ON u.CodUsuario = E.CodUsu 
+        WHERE u.Estatus = 1 
+        ORDER BY u.CodUsuario DESC ";
+
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
@@ -309,11 +417,10 @@ Full screen Modal
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
                           </button>
-                          <h4 class="modal-title" id="myModalLabel2">AGREGAR USUARIO</h4>
+                          <h4 class="modal-title" id="myModalLabel2"> </h4>
                         </div>
                         <div class="modal-body">
-                          <div id="ventana">
-                          </div>
+                          <div id="ventana"></div>
                         </div>
                         <div class="modal-footer">
                           <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -325,115 +432,10 @@ Full screen Modal
 <!--SMALL MODAL-->
 
 
-
     <hr>
-
-
-
-
-
-
-
 
 	</div>
 </body>
-
-<script>
-
-	function validarPasswd(){
-
-
-    var p1 = document.getElementById("passwd").value;
-    var p2 = document.getElementById("passwd2").value;
-
-        var espacios = false;
-    var cont = 0;
-     
-    while (!espacios && (cont < p1.length)) {
-      if (p1.charAt(cont) == " ")
-        espacios = true;
-      cont++;
-    }
-     
-    if (espacios) {
-      alert ("La contraseña no puede contener espacios en blanco");
-      return false;
-    }
-
-        if (p1.length == 0 || p2.length == 0) {
-      alert("Los campos de la password no pueden quedar vacios");
-      return false;
-    }
-
-        if (p1 != p2) {
-      alert("Las passwords deben de coincidir");
-      return false;
-    } else {
-      //alert("Todo esta correcto");
-      return true; 
-    }
-
-}
-
-</script>
-
-  <script>
-    /*PRECARGAR DATOS EN SELCT */
-    function CargaAntiguedad(str)
-    {
-    if (str=="")
-    {
-    document.getElementById("resultado").innerHTML="";
-    return;
-    }
-    if (window.XMLHttpRequest)
-    {// code for IE7+, Firefox, Chrome, Opera, Safari
-    xmlhttp=new XMLHttpRequest();
-    }
-    else
-    {// code for IE6, IE5
-    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-    }
-
-    xmlhttp.onreadystatechange=function()
-    {
-    if (xmlhttp.readyState==4 && xmlhttp.status==200)
-    {
-    document.getElementById("resultado").innerHTML=xmlhttp.responseText;
-    }
-    }
-    xmlhttp.open("GET","obtener_antiguedad.php?y="+str,true);
-    xmlhttp.send();
-    }  
-
-    </script>
-
-
-    <script>
-      function ejecuta_ajax(archivo, parametros, capa){
-        if (window.XMLHttpRequest)
-        {// code for IE7+, Firefox, Chrome, Opera, Safari
-        xmlhttp=new XMLHttpRequest();
-        }
-        else
-        {// code for IE6, IE5
-        xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-        }
-
-        xmlhttp.onreadystatechange=function()
-        {
-        if (xmlhttp.readyState==4 && xmlhttp.status==200)
-        {
-        document.getElementById(capa).innerHTML=xmlhttp.responseText;
-        }
-        }
-
-        x = Math.random()*99999999;
-        xmlhttp.open("GET",archivo+"?"+parametros+"&x="+x, true);
-        xmlhttp.send();
-        }
-
-   </script>
 
 	</html>
 
