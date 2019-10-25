@@ -1,7 +1,8 @@
 <?php
 
-$fecha11 = $_POST['dateini'];
-$fecha22 = $_POST['datefin'];
+ $fecha11 = $_POST['fecha1'];  
+ $fecha22 = $_POST['fecha2'];
+
 
 
 $fecha1 = strtotime($fecha11);
@@ -15,10 +16,4 @@ $total++;
 }
 
 echo $total;
-
-
-
-//echo "2";
-
-?>
 
