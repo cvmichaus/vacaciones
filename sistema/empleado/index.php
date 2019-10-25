@@ -410,22 +410,23 @@ Full screen Modal
      </div>
          <div class="modal-body">
             <h6>Bienvenido <?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></h6>
-            Tienes  <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> 
-
+            Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> </span>
+              <span style="color: red;font-weight: bolder;">
             <?php
 
         $qryConsulta01 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+
      if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
                                      $dataCons01 = mysqli_fetch_assoc($resQryConsulta01);
                                     
-                                    if($dataCons01['SiHayDias'] == 1 ){
+                                    if($dataCons01["SiHayDias"] == 1 ){
 
-                                      $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and != 1 ";
+                                      $qryConsulta02 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
                                             if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
 
-                                                      echo " Con ".$DiasVacAntPHP." Dias del Periodo Anterior , Tienes 90 dias para solicitarlo  de lo contrario venceran.";
+                                                      echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo Anterior , y vencen en  134 dias.";
                                             }
                                                                                 
                                     }else{
@@ -435,6 +436,7 @@ Full screen Modal
 
                         }
             ?>
+          </span>
      </div>
          <div class="modal-footer">
         <a href="#" data-dismiss="modal" class="btn btn-danger">Cerrar</a>

@@ -113,8 +113,7 @@ session_start();
                   </div>
 
                                           <?php
-
-                        $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and SeUso =0 ";
+$qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and SeUso =0 ";
                         if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
                                                  $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
                                                 
@@ -135,6 +134,7 @@ session_start();
                                     </div>
                                     </div>
 
+
                                     <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Totales </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
@@ -142,7 +142,6 @@ session_start();
                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                     </div>
                                     </div>
-                                    
                                                         <?php
                                                                                             
                                                 }else{

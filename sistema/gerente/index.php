@@ -9,6 +9,12 @@ session_start();
 
       $user = $_SESSION['UsuarioNombre'];
       $iduser = $_SESSION['CodUsuario'];
+
+      $DatosGerentes = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$iduser." ";
+     if($resDatosGerenetes = $mysqli->query($DatosGerentes)) {
+      $dataGerentes = mysqli_fetch_assoc($resDatosGerenetes);  
+
+                              }
  ?>
 <!DOCTYPE html>
 <html>
@@ -22,18 +28,20 @@ session_start();
     <meta name="description" content="">
 
 
-
 <!--<script src="//code.jquery.com/jquery-3.4.1.min.js" ></script>-->
-<link rel="stylesheet" href="../sistema/bootstrap/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
-<script src="../sistema/jquery/js/jquery-3.2.1.min"  crossorigin="anonymous"></script>
-<script src="../sistema/bootstrap/js/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="../sistema/bootstrap/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+
 <!--
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 -->
 <!--<script type="text/javascript" charset="utf8" src=""></script>-->
+
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
 <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/buttons.flash.min.js"></script>
@@ -53,8 +61,8 @@ session_start();
    });
 </script>
 
-
 <script type="text/javascript" language="javascript" class="init">
+
  $(document).ready(function() {
         var selected = [];
 
@@ -221,7 +229,7 @@ Full screen Modal
 
   <div class="container-fluid">
 
-
+  <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formsolicitud.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Solicitar Vacaciones </button>
 
       <hr>
 <!--TABLA DE SOLICITUDES DE VACACIONES-->
@@ -248,9 +256,21 @@ Full screen Modal
                 INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario
                 WHERE e.Reporta = ".$iduser." ORDER BY s.CodSol DESC ";
                            if($resqryUsuarios = $mysqli->query($sqlUsuarioS)) {
-                                while($row = mysqli_fetch_assoc($resqryUsuarios)){   
+                                while($row = mysqli_fetch_assoc($resqryUsuarios)){  
+
+                                  $EstatusPHP2 = $row['Estatus'];
+                            if($EstatusPHP2 == 0 )
+                            { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: red; font-color:black;';  }
+                            else if($EstatusPHP2 == 1){ 
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: green; font-color:white;';
+                             }
+                            else if($EstatusPHP2 == 2){ 
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: yellow; font-color:white;';
+                             }
+                            else { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em;';  }
+
       ?>
-              <tr style="text-align: center;vertical-align: middle;font-size: .8em;">
+              <tr style="<?php echo $estilo; ?>">
                  <td>
                   <?php
                   // echo $row['CodUsuario']; 
@@ -310,8 +330,7 @@ Full screen Modal
                   <?php
                           }
                        ?>
-                     &nbsp; &nbsp;
-                <button type="button" class="btn btn-round btn-primary btn-sm" onclick="ejecuta_ajax('addvacaciones.php','codUsuario=<?php echo $row['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Add Vacaciones </button>
+            
                   </div>
               </td>
              
@@ -340,9 +359,7 @@ Full screen Modal
                           <th>Fecha Inicio</th>
                           <th>Fecha Fin</th>
                           <th>Dias Solicitados</th>
-                         
-               <th>Estatus</th>
-             
+                          <th>Estatus</th>             
                         </tr>
                       </thead>
                       <tbody>
@@ -429,35 +446,93 @@ Full screen Modal
             <h3>Avisos</h3>
      </div>
          <div class="modal-body">
-            <h6>Bienvenido <?php echo $user; ?></h6>
-            Tienes las siguientes solicitudes:<br>
+            <h6>Bienvenido <?php echo $dataGerentes['Nombres'];  echo " "; echo $dataGerentes['ApellidoPaterno']; echo " "; echo $dataGerentes['ApellidoMaterno']; ?></h6>
+            <br>
 
       <?php
 
-        $sqlUsuarioS2 = "SELECT * FROM `tbl_solicitud` s 
-                INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario
-                WHERE e.Reporta = ".$iduser." AND s.Estatus = '2' ORDER BY s.CodSol DESC ";
-                           if($resqryUsuarios2 = $mysqli->query($sqlUsuarioS2)) {
-                                while($row2 = mysqli_fetch_assoc($resqryUsuarios2)){  
+            $qryConsSol = "SELECT COUNT(*) as SiHaySol FROM `tbl_solicitud` s 
+                         INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario 
+                         WHERE e.Reporta = ".$iduser." AND s.Estatus = '2' ORDER BY s.CodSol DESC   ";
+          if($resQryConsSol = $mysqli->query($qryConsSol)) {
+                                         $dataConSol = mysqli_fetch_assoc($resQryConsSol);
+                                        
+                                if($dataConSol["SiHaySol"] == 1 ){
+
+                                  echo "Tienes las siguientes solicitudes:<br>";
+
+                                                                  $sqlUsuarioS2 = "SELECT * FROM `tbl_solicitud` s 
+                                INNER JOIN `tbl_empleados` e ON e.CodUsu = s.CodUsuario
+                                WHERE e.Reporta = ".$iduser." AND s.Estatus = '2' ORDER BY s.CodSol DESC ";
+                               if($resqryUsuarios2 = $mysqli->query($sqlUsuarioS2)) {
+                                      while($row2 = mysqli_fetch_assoc($resqryUsuarios2)){  
 
 
-                                                    $ConsultaPrincipal2 = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$row2['CodUsuario']." ";
-                                                    if($resqryUsuario2 = $mysqli->query($ConsultaPrincipal2)) {
-                                                    $data22 = mysqli_fetch_assoc($resqryUsuario2);   
-                                                    $sqlObtenerU = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data22['CodUsu']."  ";
-                                                    if($resqry22 = $mysqli->query($sqlObtenerU)) {
-                                                    while($rowEmp2 = mysqli_fetch_assoc($resqry22)){  
-                                                    echo $rowEmp2['Nombres']; echo " "; echo $rowEmp2['ApellidoPaterno']; echo " "; echo $rowEmp2['ApellidoMaterno']; echo "<br>";
-                                                    }
-                                                    }
+                                                          $ConsultaPrincipal2 = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$row2['CodUsuario']." ";
+                                                              if($resqryUsuario2 = $mysqli->query($ConsultaPrincipal2)) {
+                                                              $data22 = mysqli_fetch_assoc($resqryUsuario2);   
+                                                              $sqlObtenerU = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data22['CodUsu']."  ";
+                                                                    if($resqry22 = $mysqli->query($sqlObtenerU)) {
+                                                                        while($rowEmp2 = mysqli_fetch_assoc($resqry22)){  
+                                                                        echo $rowEmp2['Nombres']; echo " "; echo $rowEmp2['ApellidoPaterno']; echo " "; echo $rowEmp2['ApellidoMaterno']; echo "<br>";
+                                                                        }
+                                                                    }
 
-                                                    }
+                                                              }
+
+                                                    } 
+
+                                          }
+                                        
+                                         }else{ 
+                                            echo " No hay Solicitudes por el momento."; 
+                                            }
+
+                                      }
 
 
-                                } 
+                        
+            ?>
+          </span>
+                  <hr>
+                   <?php echo $dataGerentes['Nombres'];  echo " "; echo $dataGerentes['ApellidoPaterno']; echo " "; echo $dataGerentes['ApellidoMaterno']; ?>
 
-                              }
-      ?>
+                   <?php
+      $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
+                  if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
+                      $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);                        
+                  }
+    ?>
+
+     Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> </span>
+
+           <span style="color: red;font-weight: bolder;">
+            <?php
+
+        $qryConsulta01 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+
+     if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
+                                     $dataCons01 = mysqli_fetch_assoc($resQryConsulta01);
+                                    
+                                    if($dataCons01["SiHayDias"] == 1 ){
+
+                                    $qryConsulta022 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." ";
+                                            if($resQryConsulta022 = $mysqli->query($qryConsulta022)) {
+                                              $dataCons022 = mysqli_fetch_assoc($resQryConsulta022);   
+                                                    $DiasVacAntPHP =  $dataCons022['DiasVacAnt'];
+
+                                                      echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo Anterior , y vencen en  134 dias.";
+                                            }
+                                                                                
+                                    }else{
+                                        
+                                    }
+
+                                  }
+
+                                  ?>
+
+                                </span>
           
      </div>
          <div class="modal-footer">
@@ -478,6 +553,7 @@ Full screen Modal
 
   </div>
 </body>
+
 
 <script>
 
@@ -576,6 +652,52 @@ Full screen Modal
 
    </script>
 
+
+
+     <script>
+
+                        function objetoAjax(){
+                        var xmlhttp = false;
+                        try {
+                        xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
+                        } catch (e) {
+                        try {
+                        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                        } catch (E) {
+                        xmlhttp = false; }
+                        }
+                        if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
+                        xmlhttp = new XMLHttpRequest();
+                        }
+                        return xmlhttp;
+                        }
+
+                        function enviarDatos(){
+                        //Recogemos los valores introducimos en los campos de texto
+                        dateini = document.formulario.dateini.value;
+                        datefin = document.formulario.datefin.value;
+                        //Aquí será donde se mostrará el resultado
+                        diassol = document.getElementById('diassol');
+                        //instanciamos el objetoAjax
+                        ajax = objetoAjax();
+                        //Abrimos una conexión AJAX pasando como parámetros el método de envío, y el archivo que realizará las operaciones deseadas
+                        ajax.open("POST", "fechas.php", true);
+                        //cuando el objeto XMLHttpRequest cambia de estado, la función se inicia
+                        ajax.onreadystatechange = function() {
+                        //Cuando se completa la petición, mostrará los resultados
+                        if (ajax.readyState == 4){
+                        //El método responseText() contiene el texto de nuestro 'consultar.php'. Por ejemplo, cualquier texto que mostremos por un 'echo'
+                        diassol.value = (ajax.responseText)
+                        }
+                        }
+                        //Llamamos al método setRequestHeader indicando que los datos a enviarse están codificados como un formulario.
+                        ajax.setRequestHeader("Content-Type","application/x-www-form-urlencoded");
+                        //enviamos las variables a 'consulta.php'
+                        ajax.send("&dateini="+dateini+"&datefin="+datefin)
+                        }
+                          </script>
+            
+
    <!-- DIFERENCIA DE FECHAS -->
   <script type="text/javascript">
 
@@ -596,11 +718,26 @@ Full screen Modal
 <!-- RESTA DIAS -->
   <script type="text/javascript">
   function restadias(){
+
   var diassol = document.getElementById('diassol').value;
-  var totaldias = document.getElementById('totaldias').value;
-  var res = parseInt(totaldias) - parseInt(diassol);
-  document.getElementById("diasres").value = res;
+  var diasperiodoant = document.getElementById('diasperiodoant').value;
+
+      if(diasperiodoant >= 1){
+      var totaldias = document.getElementById('totaldias').value;
+
+      var total = parseInt(totaldias) + parseInt(diasperiodoant);
+      var res = parseInt(total) - parseInt(diassol);
+      document.getElementById("diasres").value = res;
+
+      } else{
+      var totaldias = document.getElementById('totaldias').value;
+      var res = parseInt(totaldias) - parseInt(diassol);
+      document.getElementById("diasres").value = res;
+      }
+
   }
+
+
   </script>
 <!-- RESTA DIAS -->
 

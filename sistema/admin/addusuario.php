@@ -109,7 +109,7 @@
 																		$mail3->SetFrom("vacacioneswrimexico@gmail.com");
 																		//$mail3->AddAddress($CorreoEmpleado2);
 																		$mail3->AddAddress($CorreoPHP);
-																		$mail3->AddAddress("Alejandro.lopez@wri.org");
+																		//$mail3->AddAddress("Alejandro.lopez@wri.org");
 
 
 																		$mail3->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
@@ -186,7 +186,7 @@
 																		$mail2->SetFrom("vacacioneswrimexico@gmail.com");
 																		//$mail2->AddAddress($CorreoEmpleado2);
 																		$mail2->AddAddress($CorreoPHP);
-																		$mail2->AddAddress("Alejandro.lopez@wri.org");
+																		//$mail2->AddAddress("Alejandro.lopez@wri.org");
 
 
 																		$mail2->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";

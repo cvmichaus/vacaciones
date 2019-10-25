@@ -312,7 +312,7 @@ Full screen Modal
         E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,
         E.diasA,E.mesesA,E.aniosA,E.DiasVac  FROM `tbl_usuarios` as u 
         INNER JOIN tbl_empleados as E ON u.CodUsuario = E.CodUsu 
-        WHERE u.Estatus = 1 
+        WHERE u.Estatus = 1 AND u.CodUsuario <> 1
         ORDER BY u.CodUsuario DESC ";
 
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
@@ -369,7 +369,7 @@ Full screen Modal
 
                         if($resqryUsuarioDV = $mysqli->query($sqlUsuarioDV)) {
                         while($rowDV = mysqli_fetch_assoc($resqryUsuarioDV)){ 
-                             echo $DiasVacPHP = $rowDV['DiasVac'];
+                             echo $DiasVacPHP = $rowDV['DiasVac'] + $dataCons01['DiasVacAnt'];
                         }
 
                         }
@@ -393,9 +393,15 @@ Full screen Modal
             </td>
 
             <td>
-              <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
-        <br> <br>
-                <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles2.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Contraseña </button> <br> <br>
+
+            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+
+            <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" >Detalles </button>
+             &nbsp;&nbsp;
+            <button type="button" class="btn btn-round btn-warning btn-sm" onclick="ejecuta_ajax('detalles2.php','cod=<?php echo $data['CodUsuario']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Contraseña </button>  &nbsp;&nbsp;
+
+            </div>
+
             </td>
 
           </tr>
