@@ -117,12 +117,14 @@ session_start();
                                 </head>
                                 <body>
                                 <h1>
-                                Notificacion de Solicitud de Vacaciones Apropbada:
+                                Notificación de Solicitud de Vacaciones Aprobada:
                                 </h1>
                                 <p>
 
-                                Hola estimado Usuario  tu solicitud ha sido aprobada <br>
-                                Para revisar tus dias restantes segir el siguiente link:
+                               
+                                Hola estimado Usuario tu solicitud ha sido aprobada <br>
+                                Para revisar tus días restantes seguir el siguiente link:
+
                                 <br>
                                 http:localhost/sistemadevacaciones/index.php
                                 </p>
@@ -208,23 +210,26 @@ session_start();
 
                                 $mail4->Subject = "Solicitud de Vacaciones Rechazada";
                                 $mail4->Body = '
-                                <html>
+                                 <html>
                                 <head>
                                 <title>Bienvenido</title>
                                 </head>
                                 <body>
                                 <h1>
-                                Notificacion de Solicitud de Vacaciones Rechazada:
+                                Notificación de Solicitud de Vacaciones Aprobada:
                                 </h1>
                                 <p>
 
-                                 Hola estimado Usuario  tu solicitud ha sido rechazada <br>
-                                  Para revisar el motivo entrar al siguiente link:
+                               
+                                Hola estimado Usuario tu solicitud ha sido aprobada <br>
+                                Para revisar tus días restantes seguir el siguiente link:
+
                                 <br>
                                 http:localhost/sistemadevacaciones/index.php
                                 </p>
 
                                 </body>
+                                </html>
                                 </html>
                                 ';
 

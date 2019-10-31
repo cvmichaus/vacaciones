@@ -119,7 +119,7 @@
 
 
 						      <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Reporta</label>
+                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Jefe 1</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                             <select id="reporta" name="reporta" class="form-control" data-inputmask="" >
                             <option value="">Seleccione</option>
@@ -144,7 +144,20 @@
 						      <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Jefe</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                       <input  type="text" id="jefe" name="jefe" placeholder="Jefe">
+                       <select id="jefe" name="jefe" class="form-control" data-inputmask="" >
+                            <option value="">Seleccione</option>
+                            <option value="">Ninguno</option>
+                            <?php
+                            $sqlUsuario = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND   u.Perfil = 3  ";
+                            if($resqryUsuario = $mysqli->query($sqlUsuario)) {
+                            while($dataEmpleado = mysqli_fetch_assoc($resqryUsuario)){  
+                            ?>
+                            <option value="<?php echo $dataEmpleado['CodUsuario']; ?>"><?php echo $dataEmpleado['CodUsuario']; ?>-<?php echo $dataEmpleado['Nombres']; ?> <?php echo $dataEmpleado['ApellidoPaterno']; ?> <?php echo $dataEmpleado['ApellidoMaterno']; ?></option>
+                            <?php
+                            }
+                            }
+                            ?>
+                            </select>
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>

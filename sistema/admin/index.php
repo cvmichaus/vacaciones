@@ -294,14 +294,16 @@ Full screen Modal
           <th>Nombre</th>
           <th>Posicion</th>
           <th>Area</th>
-          <th>Reporta a</th>
+          <th>Perfil</th>
+          <th>Jefe 1</th>
           <th>Jefe 2</th>
+           <th>Fecha Alta</th>
           <th>Fecha Ingreso</th>
           <th width="20%">Antiguedad</th>
-          <th>Dias Vacaciones Periodo Anterior</th>
-          <th>Dias Vacaciones x Ley</th>
-          <th>Dias Vacaciones</th>
-          <th>Dias Vacaciones x Disfrutar</th>
+          <th width="20%">Dias Vacaciones Periodo Anterior</th>
+          <th width="20%">Dias Vacaciones x Ley</th>
+          <th width="20%">Dias Vacaciones</th>
+          <th width="20%">Dias Vacaciones x Disfrutar</th>
           <th>Opciones</th>
           </tr>
     </thead>
@@ -310,7 +312,7 @@ Full screen Modal
 
         $ConsultaPrincipal = "SELECT u.CodUsuario,E.Nombres,E.ApellidoPaterno,
         E.ApellidoMaterno,E.Posicion,E.Area,E.Reporta,E.Jefe2,E.fecha_ingreso,
-        E.diasA,E.mesesA,E.aniosA,E.DiasVac  FROM `tbl_usuarios` as u 
+        E.diasA,E.mesesA,E.aniosA,E.DiasVac,u.Perfil,u.Fecha_Alta  FROM `tbl_usuarios` as u 
         INNER JOIN tbl_empleados as E ON u.CodUsuario = E.CodUsu 
         WHERE u.Estatus = 1 AND u.CodUsuario <> 1
         ORDER BY u.CodUsuario DESC ";
@@ -322,6 +324,11 @@ Full screen Modal
           <td><?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></td>
           <td><?php echo $data['Posicion']; ?></td>
           <td><?php echo $data['Area']; ?></td>
+           <td><?php 
+           $PerfilPHP = $data['Perfil']; 
+              if($PerfilPHP == 2){ echo "EMPLEADO";}
+                else if($PerfilPHP == 3 ){ echo "GERENTE"; } 
+           ?></td>
           <td><?php
                 $sqlObtenerU = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data['Reporta']."  ";
                 if($resqry = $mysqli->query($sqlObtenerU)) {
@@ -331,6 +338,15 @@ Full screen Modal
                 }
           ?></td>
             <td><?php echo $data['Jefe2']; ?></td>
+              <td><?php 
+
+                echo  $fecha_Alta = $data['Fecha_Alta']; echo "<br>";
+
+                  //$fecha_del_dia2= $fecha_del_dia;
+                 
+             
+
+               ?></td> 
             <td><?php echo $data['fecha_ingreso']; ?></td>            
             <td width="20%"><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
              <td>

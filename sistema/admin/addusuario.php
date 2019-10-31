@@ -4,7 +4,13 @@
 	date_default_timezone_set('America/Mexico_City');
 	$fecha_del_dia=date('Y-m-d');//fecha actual
 	setlocale(LC_TIME,"es_ES");
-	$hora_actual= strftime("%H:%M:%S");  
+	$hora_actual= strftime("%H:%M:%S"); 
+
+
+	  //$date_now = date('d-m-Y');
+             $date_future = strtotime('+134 day', strtotime($fecha_del_dia));
+               $date_future = date('d-m-Y', $date_future);
+
 
  $UsuarioPHP = $_POST["usuario"];    
  $PassPHP = $_POST["passwd"];          
@@ -45,7 +51,7 @@
 
 	
 
-	$consulta1 = "INSERT INTO `tbl_usuarios` (`CodUsuario`, `Usuario`, `Clave`, `Correo`, `Estatus`, `Perfil`, `Fecha_Alta`, `Hora_Alta`) VALUES (NULL,'".$UsuarioPHP."', '".$PassEncriptadoPHP."', '".$CorreoPHP."', '1', '".$PerfilPHP."','".$fecha_del_dia."', '".$hora_actual."')";
+	$consulta1 = "INSERT INTO `tbl_usuarios` (`CodUsuario`, `Usuario`, `Clave`, `Correo`, `Estatus`, `Perfil`, `Fecha_Alta`, `Hora_Alta`) VALUES (NULL,'".$UsuarioPHP."', '".$PassEncriptadoPHP."', '".$CorreoPHP."', '1', '".$PerfilPHP."','".$fecha_del_dia."', '".$hora_actual."' )";
 
 	if($resultado1 = $mysqli->query($consulta1)) {
 
@@ -74,7 +80,7 @@
 
 													if($PeriodoAntPHP <> 0 or $PeriodoAntPHP <> NULL){
 															
-													      $consulta4 = "INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`,`CodUsuario`,`PeriodoAnt`,`DiasVacAnt`) VALUES (NULL,'".$UsuarioCod."','".$PeriodoAntPHP."','".$DiasVacPeriodoAntPHP."' )";
+													      $consulta4 = "INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`,`CodUsuario`,`PeriodoAnt`,`DiasVacAnt`,`FechaTermino`) VALUES (NULL,'".$UsuarioCod."','".$PeriodoAntPHP."','".$DiasVacPeriodoAntPHP."','".$date_future."' )";
 
 															if($resultado4 = $mysqli->query($consulta4)) {
 
