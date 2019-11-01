@@ -425,8 +425,10 @@ Full screen Modal
                                             if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
+                                                     $FechaterminoPHP =  $dataCons02['FechaTermino'];
+                                                     $PeriodoAntPHP =  $dataCons02['PeriodoAnt'];
 
-                                                      echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo Anterior , y vencen en  134 dias.";
+                           echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo ".$PeriodoAntPHP." , y vencen el  ".$FechaterminoPHP." .";
                                             }
                                                                                 
                                     }else{

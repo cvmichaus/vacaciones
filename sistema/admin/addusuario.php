@@ -6,10 +6,9 @@
 	setlocale(LC_TIME,"es_ES");
 	$hora_actual= strftime("%H:%M:%S"); 
 
-
 	  //$date_now = date('d-m-Y');
              $date_future = strtotime('+134 day', strtotime($fecha_del_dia));
-               $date_future = date('d-m-Y', $date_future);
+               $date_future2 = date('Y-m-d', $date_future);
 
 
  $UsuarioPHP = $_POST["usuario"];    
@@ -31,7 +30,7 @@
 	$CorreoPHP = $_POST["correo"];  
 	$PerfilPHP = $_POST["perfil"];        
 
-/* DAtos EMPLEADO*/
+//DAtos EMPLEADO
 
 	 $nombrePHP = $_POST["nombre"];   
 	 $appaternoPHP = $_POST["appaterno"];   
@@ -80,7 +79,7 @@
 
 													if($PeriodoAntPHP <> 0 or $PeriodoAntPHP <> NULL){
 															
-													      $consulta4 = "INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`,`CodUsuario`,`PeriodoAnt`,`DiasVacAnt`,`FechaTermino`) VALUES (NULL,'".$UsuarioCod."','".$PeriodoAntPHP."','".$DiasVacPeriodoAntPHP."','".$date_future."' )";
+													      $consulta4 = "INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`,`CodUsuario`,`PeriodoAnt`,`DiasVacAnt`,`FechaTermino`) VALUES (NULL,'".$UsuarioCod."','".$PeriodoAntPHP."','".$DiasVacPeriodoAntPHP."','".$date_future2."' )";
 
 															if($resultado4 = $mysqli->query($consulta4)) {
 
@@ -238,29 +237,15 @@
 											
 
 											}
-											/*else{
-											echo "no se guardo la consulta";
-											echo "Error: "  . $mysqli->error;
-											}*/
+											
 
 							}
 
-							/*else{
-							echo "no se guardo la consulta";
-							echo "Error: "  . $mysqli->error;
-							}*/
-
-
-
+						
 			}
 
 
 	}
 							
-			
-							
-
-
-
 
 ?>
