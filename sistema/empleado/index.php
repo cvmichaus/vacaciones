@@ -232,8 +232,8 @@ Full screen Modal
           <th>Nombre</th>
           <th>Posicion</th>
           <th>Area</th>
-          <th>Reporta a</th>
-          <th>Jefe 2</th>
+          <th>Jefe 1 </th>
+          <th>Jefe 2 </th>
           <th>Fecha Ingreso</th>
           <th>Antiguedad</th>
           <th>Dias Vacaciones Periodo Anterior</th>
@@ -261,7 +261,16 @@ Full screen Modal
                   }
                 }
           ?></td>
-            <td><?php echo $data['Jefe2']; ?></td>
+            <td>
+              <?php
+                $sqlObtenerU2 = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data['Jefe2']."  ";
+                if($resqry2 = $mysqli->query($sqlObtenerU2)) {
+                while($rowEmp2 = mysqli_fetch_assoc($resqry2)){  
+                echo $rowEmp2['Nombres']; echo " "; echo $rowEmp2['ApellidoPaterno']; echo " "; echo $rowEmp2['ApellidoMaterno'];
+                  }
+                }
+          ?>
+            </td>
             <td><?php echo $data['fecha_ingreso']; ?></td>
             <td><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
              <td>
@@ -281,7 +290,7 @@ Full screen Modal
               $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
                   if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                       $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);  
-                      echo $dataCons02['DiasVacDisponibles'];                      
+                      echo $dataCons02['DiasVacDisponibles'] + $DiasVacAntPHP;                   
                   }
 
 
@@ -426,9 +435,20 @@ Full screen Modal
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
                                                      $FechaterminoPHP =  $dataCons02['FechaTermino'];
+                                                     /* Reconstrimos las Fechas */
+                                                     $porciones = explode("-", $FechaterminoPHP);
+                                                     $Anio_PHP=$porciones[0];
+                                                     $Mes_PHP=$porciones[1];
+                                                     $Dia_PHP=$porciones[2];
+                                                     $esp="-";
+                                                     $fecha2 = $Dia_PHP.$esp.$Mes_PHP.$esp.$Anio_PHP; 
+
+
+
+
                                                      $PeriodoAntPHP =  $dataCons02['PeriodoAnt'];
 
-                           echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo ".$PeriodoAntPHP." , y vencen el  ".$FechaterminoPHP." .";
+                           echo " , y tienes  ".$DiasVacAntPHP." Dias del Periodo ".$PeriodoAntPHP." , y vencen el  ".$fecha2." .";
                                             }
                                                                                 
                                     }else{
@@ -624,11 +644,11 @@ Full screen Modal
       if(diasperiodoant >= 1){
       var totaldias = document.getElementById('totaldias').value;
 
-      var total = parseInt(totaldias) + parseInt(diasperiodoant);
+      var total =  parseInt(diasperiodoant);
       var res = parseInt(total) - parseInt(diassol);
       document.getElementById("diasres").value = res;
 
-      } else{
+      } else if(diasperiodoant == 0){
       var totaldias = document.getElementById('totaldias').value;
       var res = parseInt(totaldias) - parseInt(diassol);
       document.getElementById("diasres").value = res;

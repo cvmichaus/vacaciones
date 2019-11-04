@@ -241,6 +241,7 @@ Full screen Modal
       <th>Fecha Inicio</th>
       <th>Fecha FinA</th>
       <th>Dias Solicitados</th>
+       <th>Dias Vac Ant </th>
       <th>Dias Vac</th>
       <th>Dias Restantes</th>
       <th>Dias Vacaciones</th>
@@ -292,9 +293,25 @@ Full screen Modal
                 <td><?php echo $row['FechaInicio']; ?></td>
                 <td><?php echo $row['FechaFin']; ?></td>
                 <td><?php echo $row['DiasSolicitados']; ?></td>
+                 <td><?php
+                       $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$data['CodUsu']." ";           
+             if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
+                                    $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
+                                    /* pregunto si los hay en el usuario */
+                                          if($dataCons98['SiHayDias'] == 1 ){
+
+                                             $qryConsulta97 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$data['CodUsu']." ";
+                                                if($resQryConsulta97 = $mysqli->query($qryConsulta97)) {
+                                                $dataCons97 = mysqli_fetch_assoc($resQryConsulta97);   
+                                                echo $DiasPeriodoAnt_PHP =  $dataCons97['DiasVacAnt']; 
+
+                                              }
+                                          }
+                                        }
+                  ?></td>
                 <td><?php echo $row['TotaldiasVac']; ?></td>
                 <td><?php echo $row['DiasRestantes']; ?></td>
-                <td><?php echo $row['TotaldiasVac']; ?></td>
+                <td><?php echo $row['TotaldiasVac'] + $DiasPeriodoAnt_PHP; ?></td>
                 <td>
               <?php 
                $EstatusPHP = $row['Estatus'];
