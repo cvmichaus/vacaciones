@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 22-10-2019 a las 07:43:58
+-- Tiempo de generación: 04-11-2019 a las 14:15:45
 -- Versión del servidor: 10.1.32-MariaDB
 -- Versión de PHP: 5.6.36
 
@@ -97,11 +97,10 @@ CREATE TABLE `tbl_empleados` (
 --
 
 INSERT INTO `tbl_empleados` (`CodE`, `CodUsu`, `Nombres`, `ApellidoPaterno`, `ApellidoMaterno`, `Posicion`, `Area`, `Reporta`, `Jefe2`, `fecha_ingreso`, `aniosA`, `mesesA`, `diasA`, `DiasVac`) VALUES
-(1, 1, 'Carlos', 'Michaus', 'Barcenas', 'TI', '1', '1', '1', '2017-02-01', 2, 7, 4, 8),
-(5, 5, 'Jairo Fernando', 'Paez', 'Mendieta', 'Director de Operaciones', 'Operaciones', '', '', '2013-03-07', 6, 6, 2, 14),
-(17, 17, 'Wendy', 'Rodriguez', 'Ibarra', 'Auxiliar TI', 'TI', '5', '', '2018-05-02', 1, 5, 8, 6),
-(18, 18, 'CARLOS', 'MICHAUS', 'BARCENAS', 'DESARROLLADOR', 'SISTEMAS', '5', '', '2017-02-02', 2, 8, 10, 8),
-(19, 19, 'VALENTIN', 'MICHAUS', 'BARCENAS', 'DESARROLLADOR', 'TI', '5', '', '2017-02-02', 2, 8, 15, 8);
+(1, 1, 'Admin', 'WRI', 'Vaaciones', 'Sistema', '1', '1', '1', '2017-02-01', 2, 7, 4, 8),
+(5, 5, 'JAIRO FERNANDO', 'PAEZ', 'MENDIETA', 'DIRECTOR DE OPERACIONES', 'OPERACIONES', '', '', '2013-03-07', 6, 6, 2, 14),
+(25, 25, 'Stepfanie', 'Garcia', 'Garcia', 'Gerente', 'TI', '5', '', '2018-10-01', 1, 0, 30, 6),
+(28, 28, 'CARLOS', 'MICHUAS', 'BARCENAS', 'AUX', 'TI', '25', '5', '2018-02-01', 1, 8, 30, 6);
 
 -- --------------------------------------------------------
 
@@ -112,18 +111,18 @@ INSERT INTO `tbl_empleados` (`CodE`, `CodUsu`, `Nombres`, `ApellidoPaterno`, `Ap
 CREATE TABLE `tbl_periodoanterior` (
   `CodPeridoAnt` int(12) NOT NULL,
   `CodUsuario` int(12) NOT NULL,
-  `PeriodoAnt` int(12) NOT NULL,
+  `PeriodoAnt` varchar(250) NOT NULL,
   `DiasVacAnt` int(12) NOT NULL,
-  `SeUso` int(2) DEFAULT NULL
+  `SeUso` int(2) DEFAULT '0',
+  `FechaTermino` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `tbl_periodoanterior`
 --
 
-INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`, `CodUsuario`, `PeriodoAnt`, `DiasVacAnt`, `SeUso`) VALUES
-(3, 17, 2017, 2, 1),
-(4, 19, 2018, 4, NULL);
+INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`, `CodUsuario`, `PeriodoAnt`, `DiasVacAnt`, `SeUso`, `FechaTermino`) VALUES
+(11, 28, '1 de febrero del 2017 al  31 de enero del 2018', 0, 1, '2020-03-13');
 
 -- --------------------------------------------------------
 
@@ -147,11 +146,8 @@ CREATE TABLE `tbl_rasolicitud` (
 --
 
 INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`, `Tipo`, `Motivo`, `CodUsuario`, `FechaAR`, `HoraAR`, `EstatusSolicitud`) VALUES
-(14, 4, 2, 'Felicidades', 17, '2019-10-10', '05:44:05', 1),
-(15, 6, 1, 'no es posible', 17, '2019-10-12', '14:29:55', 0),
-(16, 7, 2, 'felicidades tu svacaciones han sido aceotadas', 18, '2019-10-12', '14:30:47', 1),
-(17, 8, 2, 'Felicidades', 18, '2019-10-12', '14:34:36', 1),
-(18, 9, 1, 'por que hay cosas aun que entregar , saludos', 19, '2019-10-17', '22:08:16', 0);
+(3, 1, 2, 'Aceptado', 28, '2019-11-03', '15:06:13', 1),
+(4, 2, 2, 'si', 28, '2019-11-03', '16:01:57', 1);
 
 -- --------------------------------------------------------
 
@@ -179,11 +175,8 @@ CREATE TABLE `tbl_solicitud` (
 --
 
 INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `FechaInicio`, `FechaFin`, `Estatus`, `FechaAltaS`, `HoraAltaS`, `Periodo`, `DiasSolicitados`, `TotaldiasVac`, `DiasRestantes`, `DiasPeriodoAnt`) VALUES
-(4, 17, '2019-10-10', '2019-10-15', 1, '2019-10-10', '02:23:00', '10 al 15 de Octubre del 2019', 5, 6, 3, 2),
-(6, 17, '2019-10-30', '2019-10-31', 0, '2019-10-10', '05:53:24', '30 al 31 de Octubre del 2019', 1, 1, 0, 0),
-(7, 18, '2019-10-14', '2019-10-18', 1, '2019-10-12', '12:33:29', '14 - 18 de Octubre del 2019', 4, 8, 4, 0),
-(8, 18, '2019-10-28', '2019-10-30', 1, '2019-10-12', '14:32:29', '28 al 29 de octubre 2019', 2, 4, 2, 0),
-(9, 19, '2019-10-18', '2019-10-25', 0, '2019-10-17', '22:06:47', 'DEL 18 AL 25  DE OCTUBRE DEL 2019', 7, 8, 1, 0);
+(1, 28, '2019-11-04', '2019-11-06', 1, '2019-11-01', '23:01:47', '4 al 6 de Noviembre del 2019', 3, 6, 1, 10),
+(2, 28, '2019-12-02', '2019-12-06', 1, '2019-11-03', '15:24:52', '2 al 05 de Diciembre del 2019', 5, 6, -4, 7);
 
 -- --------------------------------------------------------
 
@@ -209,9 +202,8 @@ CREATE TABLE `tbl_usuarios` (
 INSERT INTO `tbl_usuarios` (`CodUsuario`, `Usuario`, `Clave`, `Correo`, `Estatus`, `Perfil`, `Fecha_Alta`, `Hora_Alta`) VALUES
 (1, 'Admin', 'mtvf0ts=', 'c.michaus@gamil.com', 1, 1, '2019-09-05', '00:07:00'),
 (5, 'fernando.paez@wri.org', 'qdjl3OTU6s0=', 'michusvalentin@gmail.com', 1, 3, '2019-09-09', '22:35:34'),
-(17, 'wroiba', 'sOnh0s/GqaI=', 'michusvalentin@gmail.com', 1, 2, '2019-10-10', '00:04:02'),
-(18, 'c.michaus', 'aq+jmaCa', 'michusvalentin@gmail.com', 1, 2, '2019-10-12', '12:26:50'),
-(19, 'carlos.michaus', 'aqmlnaKbr6Gc', 'michusvalentin@gmail.com', 1, 2, '2019-10-17', '22:04:16');
+(25, 'gerente1', 'aqmlnaKb', 'michusvalentin@gmail.com', 1, 3, '2019-10-31', '00:46:13'),
+(28, 'c.michaus', 'aq+jmaCa', 'michusvalentin@gmail.com', 1, 2, '2019-10-31', '23:38:28');
 
 -- --------------------------------------------------------
 
@@ -248,9 +240,8 @@ CREATE TABLE `tbl_vacaciones_usuarioxanio` (
 
 INSERT INTO `tbl_vacaciones_usuarioxanio` (`CodVac`, `CodEmpleado`, `Anio`, `DiasVac`) VALUES
 (1, 5, 2019, 14),
-(13, 17, 2019, 1),
-(14, 18, 2019, 4),
-(15, 19, 2019, 8);
+(21, 25, 2019, 6),
+(24, 28, 2019, -2);
 
 --
 -- Índices para tablas volcadas
@@ -318,31 +309,31 @@ ALTER TABLE `tbl_cat_vacaciones`
 -- AUTO_INCREMENT de la tabla `tbl_empleados`
 --
 ALTER TABLE `tbl_empleados`
-  MODIFY `CodE` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `CodE` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_periodoanterior`
 --
 ALTER TABLE `tbl_periodoanterior`
-  MODIFY `CodPeridoAnt` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `CodPeridoAnt` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_rasolicitud`
 --
 ALTER TABLE `tbl_rasolicitud`
-  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `CodRAS` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_solicitud`
 --
 ALTER TABLE `tbl_solicitud`
-  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `CodSol` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_usuarios`
 --
 ALTER TABLE `tbl_usuarios`
-  MODIFY `CodUsuario` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `CodUsuario` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT de la tabla `tbl_vacaciones`
@@ -354,7 +345,7 @@ ALTER TABLE `tbl_vacaciones`
 -- AUTO_INCREMENT de la tabla `tbl_vacaciones_usuarioxanio`
 --
 ALTER TABLE `tbl_vacaciones_usuarioxanio`
-  MODIFY `CodVac` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `CodVac` int(12) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
