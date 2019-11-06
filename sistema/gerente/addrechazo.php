@@ -35,7 +35,7 @@ session_start();
                     /* pregunto si los hay en el usuario */
 
                               if($dataCons98['SiHayDias'] == 1 ){
-                              echo '<script language="javascript">alert(" si hay dias del periodo anterior de este usuario ");</script>';
+                            // echo '<script language="javascript">alert(" si hay dias del periodo anterior de este usuario ");</script>';
                               /*si los hay restamos los dias solicitados si queda residuo los restamos  con los doas de vacaciones oficiales*/
                               /*obtengo los dias del peiodo anterior*/
 
@@ -48,7 +48,7 @@ session_start();
                                         $DiasPeriodoAnt_PHP =  $dataCons97['DiasVacAnt']; 
                                         //$residuo =  $CodPeriodoAntPHP -
                                         //$qryConsulta94 = "UPDATE  `tbl_periodoanterior` SET SeUso = '1'  WHERE CodPeridoAnt =  ".$CodPeriodoAntPHP." ";
-                                        echo '<script language="javascript">alert(" entro al if para obtener los datos del periodo anterior Dias del Periodo: '.$DiasPeriodoAnt_PHP.' clave del periodo : '.$CodPeriodoAntPHP.' ");</script>';
+                                       // echo '<script language="javascript">alert(" entro al if para obtener los datos del periodo anterior Dias del Periodo: '.$DiasPeriodoAnt_PHP.' clave del periodo : '.$CodPeriodoAntPHP.' ");</script>';
 
                                                   /*obtenemos sus dias de solicitados*/  
                                                   $sqlsol = "SELECT * FROM  `tbl_solicitud`  WHERE  CodUsuario  = ".$_POST["CodEmpleado"]." and CodSol = ".$CodSolicitud." ";
@@ -56,7 +56,7 @@ session_start();
                                                   $datasol = mysqli_fetch_assoc($qrysol);
                                                   $DiasSolPHP = $datasol['DiasSolicitados'];
 
-                                         echo '<script language="javascript">alert(" Los dias solicitados de ese empladoes : '.$DiasSolPHP.' ");</script>';
+                                        // echo '<script language="javascript">alert(" Los dias solicitados de ese empladoes : '.$DiasSolPHP.' ");</script>';
                                                      /* veo si es mayor o igual los dias para poder saber si necesito descontarmas dias*/
 
                                                 if($DiasSolPHP == $DiasPeriodoAnt_PHP){ /* SI ES IGUAL */
@@ -146,21 +146,43 @@ session_start();
                                                 }
 
 
-                                                    }   
+                                                      
 
-                                                  }
+                                                
 
 
-                              }else{
-                                 echo '<script language="javascript">alert(" no hay dias del periodo anterior de este usuario ");</script>';
+                                                          }else{
+                                                             echo '<script language="javascript">alert(" no hay dias del periodo anterior de este usuario ");</script>';
 
-                              }
+                                                                  $sqltrab = "SELECT * FROM  `tbl_empleados`   WHERE  CodUsu  = ".$_POST["CodEmpleado"]." ";
+                                                                          if($qrytrab = $mysqli->query($sqltrab)) {
+                                                                          $datatrab = mysqli_fetch_assoc($qrytrab);
+                                                                          $DiasVacPHP = $datatrab['DiasVac'];
 
-                    }
+                                                                             $total = $DiasSolPHP - $DiasVacPHP;
+
+                                                                              $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','2')";             
+                                                                              if($resultado1 = $mysqli->query($consulta1)) {
+                                                                              echo '<script language="javascript">alert(" se interto la aceptacion de la solicitud ");</script>';
+                                                                              $consulta2 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";
+
+                                                                                  $consulta3 = "UPDATE `tbl_vacaciones_usuarioxanio`  SET `DiasVac` = ".$total." WHERE  CodEmpleado = ".$_POST["CodEmpleado"]." ";  
+                                                                                  if($resultado3 = $mysqli->query($consulta3)) {
+
+                                                                                     header("Location: index.php"); 
+
+                                                                                  }  
+
+
+                                                                              }
+
+                                                          }
+
+                                                }
 
 
               } else if($EstatusSolicitud == 0){ /* TERMINA IF DE SI ES ACEPTADO  SI ES RECHAZADO*/
-              echo '<script language="javascript">alert("peticion rechazada, jajaja");</script>';
+              //echo '<script language="javascript">alert("peticion rechazada, jajaja");</script>';
 
                        $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','1')";             
                       if($resultado1 = $mysqli->query($consulta1)) {
@@ -208,13 +230,12 @@ session_start();
                                 </head>
                                 <body>
                                 <h1>
-                                Notificación de Solicitud de Vacaciones Aprobada:
+                                Notificación de Solicitud de Vacaciones Rechazada:
                                 </h1>
                                 <p>
 
-                               
-                                Hola estimado Usuario tu solicitud ha sido aprobada <br>
-                                Para revisar tus días restantes seguir el siguiente link:
+                               Hola estimado Usuario tu solicitud ha sido Rechazada <br>
+                                Para revisar tus dias o generar otra solicitud ingresar al siguiente link:
 
                                 <br>
                                 http:localhost/sistemadevacaciones/index.php

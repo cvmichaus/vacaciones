@@ -243,7 +243,7 @@ Full screen Modal
        <th>Dias Vac Ant </th>
       <th>Dias Vac</th>
       <th>Dias Restantes</th>
-      <th>Dias Vacaciones</th>
+      <th>Total Vacaciones</th>
       <th>Estatus</th>
       <th>Observaciones</th>
       <th>Opciones</th>
@@ -306,11 +306,19 @@ Full screen Modal
 
                                               }
                                           }
+
+
                                         }
                   ?></td>
                 <td><?php echo $row['TotaldiasVac']; ?></td>
                 <td><?php echo $row['DiasRestantes']; ?></td>
-                <td><?php echo $row['TotaldiasVac'] + $DiasPeriodoAnt_PHP; ?></td>
+                <td><?php 
+                      if($dataCons98['SiHayDias'] == 1){
+                        echo $row['TotaldiasVac'] + $DiasPeriodoAnt_PHP;
+                      }else{
+                        echo $row['TotaldiasVac'];
+                      }
+                 ?></td>
                 <td>
               <?php 
                $EstatusPHP = $row['Estatus'];
