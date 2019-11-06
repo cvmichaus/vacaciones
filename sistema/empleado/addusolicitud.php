@@ -15,7 +15,7 @@ $user = isset($_SESSION['UsuarioNombre']) ? $_SESSION['UsuarioNombre'] : null ;
 $iduser= isset($_SESSION['CodUsuario']) ? $_SESSION['CodUsuario'] : null ;
 
 
-$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`DiasPeriodoAnt`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."', '".$_POST['periodo']."', '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','".$_POST['diasperiodoant']."','2','".$fecha_del_dia."','".$hora_actual."')";					   
+$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`DiasPeriodoAnt`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."',  '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','".$_POST['diasperiodoant']."','2','".$fecha_del_dia."','".$hora_actual."')";					   
 	if($resultado1 = $mysqli->query($consulta1)) {
 		
 		
@@ -31,6 +31,7 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
 
 								$CorreoEmpleado = $_POST["CorreoEmpleado"];
 								$CorreoReporta = $_POST["CorreoReporta"];
+                $NombreReporta = $rowReporta['Nombres'].$espacio.$rowReporta['ApellidoPaterno'].$espacio.$rowReporta['ApellidoMaterno'];
 							
 
                          
@@ -75,12 +76,12 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
               </head>
               <body>
               <h1>
-              Notificacion de Solicitud de Vacaciones:
+              Notificación de Solicitud de Vacaciones:
               </h1>
               <p>
 
-              Hola estimado Gerente del Area el empleado '.$_POST['NombreEmpleado'].' a solicitado vacaciones '.$_POST['periodo'].' <br>
-              Para aprobar o rechazar las vacaciones favor de segir el siguiente link: localhost/sistemadevacaciones/index.php
+              Hola estimado '.$NombreReporta.'  el empleado '.$_POST['NombreEmpleado'].' ha solicitado vacaciones '.$_POST['dateini'].' al '.$_POST['datefin'].' <br>
+              Para aprobar o rechazar las vacaciones favor de seguir el siguiente link: localhost/sistemadevacaciones/index.php
               <br>
 
               </p>
@@ -90,7 +91,7 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`, `Periodo`, `F
 
 
             if(!$mail3->Send()) {
-            // echo "Mailer Error: " . $mail->ErrorInfo;
+            // echo "Mailer Error: " . $mail->ErrorInfo;  '".$_POST['dateini']."', '".$_POST['datefin']."',
             echo "Error al enviar Mensaje";
             } else {
 

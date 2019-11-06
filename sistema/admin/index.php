@@ -320,7 +320,7 @@ Full screen Modal
      if($resqryUsuario = $mysqli->query($ConsultaPrincipal)) {
                                 while($data = mysqli_fetch_assoc($resqryUsuario)){      
       ?>
-          <tr style="text-align: center; vertical-align: middle; font-size: .8em; ">
+          <tr style="text-align: center; vertical-align: middle; font-size: .7em; ">
           <td><?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></td>
           <td><?php echo $data['Posicion']; ?></td>
           <td><?php echo $data['Area']; ?></td>
@@ -337,7 +337,16 @@ Full screen Modal
                   }
                 }
           ?></td>
-            <td><?php echo $data['Jefe2']; ?></td>
+            <td>
+              <?php
+                $sqlObtenerU2 = "SELECT * FROM `tbl_empleados` as e WHERE  e.CodUsu = ".$data['Jefe2']."  ";
+                if($resqry2 = $mysqli->query($sqlObtenerU2)) {
+                while($rowEmp2 = mysqli_fetch_assoc($resqry2)){  
+                echo $rowEmp2['Nombres']; echo " "; echo $rowEmp2['ApellidoPaterno']; echo " "; echo $rowEmp2['ApellidoMaterno'];
+                  }
+                }
+          ?>
+            </td>
               <td><?php 
 
                 echo  $fecha_Alta = $data['Fecha_Alta']; echo "<br>";

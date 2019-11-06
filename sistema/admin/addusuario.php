@@ -7,8 +7,10 @@
 	$hora_actual= strftime("%H:%M:%S"); 
 
 	  //$date_now = date('d-m-Y');
-             $date_future = strtotime('+134 day', strtotime($fecha_del_dia));
-               $date_future2 = date('Y-m-d', $date_future);
+             $date_future = strtotime('+ 6 month', strtotime($fecha_del_dia));
+             $date_future2 = date('Y-m-d', $date_future);
+
+              //echo '<script language="javascript">alert(" fecha futura es  '.$date_future2.' ");</script>';
 
 
  $UsuarioPHP = $_POST["usuario"];    

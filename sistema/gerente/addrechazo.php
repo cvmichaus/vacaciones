@@ -162,6 +162,84 @@ session_start();
               } else if($EstatusSolicitud == 0){ /* TERMINA IF DE SI ES ACEPTADO  SI ES RECHAZADO*/
               echo '<script language="javascript">alert("peticion rechazada, jajaja");</script>';
 
+                       $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','1')";             
+                      if($resultado1 = $mysqli->query($consulta1)) {
+
+                      $consulta2 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";             
+                      if($resultado2 = $mysqli->query($consulta2)) {
+
+                                  /*envia correo*/
+
+                                require("../PHPMailer-master/src/PHPMailer.php");
+                                require("../PHPMailer-master/src/SMTP.php");
+                                require("../PHPMailer-master/src/Exception.php");
+
+
+                                $mail4 = new PHPMailer\PHPMailer\PHPMailer();
+                                $mail4->IsSMTP(); 
+
+                                $mail4->CharSet="UTF-8";
+                                $mail4->Host = "smtp.gmail.com";
+                                //$mail4->Host = "smtp.office365.com";
+                                //$mail4->SMTPDebug = 2; 
+                                $mail4->Port = 587; //465 or 587
+
+                                $mail4->SMTPSecure = 'tls';  
+                                $mail4->SMTPAuth = true; 
+                                $mail4->IsHTML(true);
+
+                                //Authentication
+                                $mail4->Username = "vacacioneswrimexico@gmail.com";
+                                $mail4->Password = "Rueville10!";
+                                //$mail4->Username = "recursos.humanos@wri.org";
+                                // $mail4->Password = "WRIm3x1c086!";
+
+                                //Set Params
+                                $mail4->SetFrom("vacacioneswrimexico@gmail.com");
+                                //$mail4->AddAddress($CorreoEmpleado2);
+                                 $mail4->AddAddress($CorreoEmpleado);
+
+
+                                $mail4->Subject = "Solicitud de Vacaciones Rechazada";
+                                $mail4->Body = '
+                                 <html>
+                                <head>
+                                <title>Bienvenido</title>
+                                </head>
+                                <body>
+                                <h1>
+                                Notificación de Solicitud de Vacaciones Aprobada:
+                                </h1>
+                                <p>
+
+                               
+                                Hola estimado Usuario tu solicitud ha sido aprobada <br>
+                                Para revisar tus días restantes seguir el siguiente link:
+
+                                <br>
+                                http:localhost/sistemadevacaciones/index.php
+                                </p>
+
+                                </body>
+                                </html>
+                                </html>
+                                ';
+
+
+                                if(!$mail4->Send()) {
+                                // echo "Mailer Error: " . $mail->ErrorInfo;
+                                echo "Error al enviar Mensaje";
+                                } else {
+
+                                //header("Location: index.php");  
+
+                                header("Location: index.php");  
+
+                                }
+                                
+                       }
+                    }
+
               }
 }else {
     header("Location: ../index.php");

@@ -237,7 +237,6 @@ Full screen Modal
       <thead>
       <tr style="text-align: center;vertical-align: middle;font-size: .9em; font-style: oblique;">
       <th>Usuario</th>
-      <th>Periodo</th>
       <th>Fecha Inicio</th>
       <th>Fecha FinA</th>
       <th>Dias Solicitados</th>
@@ -261,14 +260,14 @@ Full screen Modal
 
                                   $EstatusPHP2 = $row['Estatus'];
                             if($EstatusPHP2 == 0 )
-                            { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: red; font-color:black;';  }
+                            { $estilo = 'text-align: center;vertical-align: middle;font-size: .7em; background-color: red; font-color:black;';  }
                             else if($EstatusPHP2 == 1){ 
-                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: green; font-color:white;';
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .7em; background-color: green; font-color:white;';
                              }
                             else if($EstatusPHP2 == 2){ 
-                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: yellow; font-color:white;';
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .7em; background-color: yellow; font-color:white;';
                              }
-                            else { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em;';  }
+                            else { $estilo = 'text-align: center;vertical-align: middle;font-size: .7em;';  }
 
       ?>
               <tr style="<?php echo $estilo; ?>">
@@ -289,7 +288,7 @@ Full screen Modal
                           }
 
                    ?></td>
-                <td><?php echo $row['Periodo']; ?></td>
+              
                 <td><?php echo $row['FechaInicio']; ?></td>
                 <td><?php echo $row['FechaFin']; ?></td>
                 <td><?php echo $row['DiasSolicitados']; ?></td>

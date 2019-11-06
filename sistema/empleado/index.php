@@ -310,7 +310,18 @@ Full screen Modal
 
 <hr>
 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formsolicitud.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Solicitar Vacaciones </button>
+  <?php
+      if($data['aniosA'] == 0){
+
+      }
+        else{
+              ?>
+                   <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formsolicitud.php','','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Solicitar Vacaciones </button>
+              <?php
+        }
+      
+  ?>
+                   
              </div>
       <!--TABLA DE SOLICITUDES DE VACACIONES-->
           <div class="row">
@@ -326,9 +337,7 @@ Full screen Modal
                           <th>Fecha Inicio</th>
                           <th>Fecha Fin</th>
                           <th>Dias Solicitados</th>
-                         
-               <th>Estatus</th>
-             
+                          <th>Estatus</th>             
                         </tr>
                       </thead>
                       <tbody>
@@ -336,8 +345,20 @@ Full screen Modal
   $sqlUsuarioS = "SELECT * FROM `tbl_solicitud` u WHERE  u.CodUsuario = ".$iduser." ";
                            if($resqryUsuarios = $mysqli->query($sqlUsuarioS)) {
                                 while($row = mysqli_fetch_assoc($resqryUsuarios)){  
+
+
+                              $EstatusPHP = $row['Estatus'];
+                              if($EstatusPHP == 0 )
+                              { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: red; font-color:black;';  }
+                              else if($EstatusPHP == 1){ 
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: green; font-color:white;';
+                              }
+                              else if($EstatusPHP == 2){ 
+                              $estilo = 'text-align: center;vertical-align: middle;font-size: .8em; background-color: yellow; font-color:white;';
+                              }
+                              else { $estilo = 'text-align: center;vertical-align: middle;font-size: .8em;';  }
                       ?>
-                        <tr>
+                        <tr style="<?php echo $estilo; ?>">
                          
                           <td><?php echo $row['CodSol']; ?></td>
                           <td><?php //echo $row['CodUsuario'];
@@ -356,7 +377,7 @@ Full screen Modal
                          
               <td>
               <?php 
-               $EstatusPHP = $row['Estatus'];
+            
                 if($EstatusPHP == 0 )
                 { echo "Rechazado ";}
                 else if($EstatusPHP == 1){ 
