@@ -13,7 +13,7 @@ session_start();
 
         $accion = isset($_GET['accion']) ? $_GET['accion'] : null ;
           if(isset($_GET['accion'])){
-               echo '<script language="javascript">alert("peticion '.$accion.' ");</script>';
+              //echo '<script language="javascript">alert("peticion '.$accion.' ");</script>';
           }
       
 

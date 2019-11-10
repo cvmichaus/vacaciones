@@ -300,10 +300,10 @@ Full screen Modal
            <th>Fecha Alta</th>
           <th>Fecha Ingreso</th>
           <th width="20%">Antiguedad</th>
-          <th width="20%">Dias Vacaciones Periodo Anterior</th>
-          <th width="20%">Dias Vacaciones x Ley</th>
-          <th width="20%">Dias Vacaciones</th>
-          <th width="20%">Dias Vacaciones x Disfrutar</th>
+
+          <th width="20%">Dias Vac</th>
+          <th width="20%">Dias Solicitados</th>
+          <th width="20%">Dias Restantes</th>
           <th>Opciones</th>
           </tr>
     </thead>
@@ -358,18 +358,18 @@ Full screen Modal
                ?></td> 
             <td><?php echo $data['fecha_ingreso']; ?></td>            
             <td width="20%"><?php echo $data['aniosA']; echo " Años"; echo " - "; echo $data['mesesA']; echo " Meses"; echo " - "; echo $data['diasA']; echo " Dias"; ?></td>
-             <td>
+            
                   <?php
 
         $qryConsulta01 = "SELECT DiasVacAnt FROM tbl_periodoanterior where CodUsuario = ".$data['CodUsuario']." ";
      if($resQryConsulta01 = $mysqli->query($qryConsulta01)) {
                                 $dataCons01 = mysqli_fetch_assoc($resQryConsulta01);   
-                                    echo $dataCons01['DiasVacAnt'];
+                                    //echo $dataCons01['DiasVacAnt'];
                             
 
                         }
               ?>    
-             </td>
+            
              <td>
 
               <?php 
@@ -385,23 +385,8 @@ Full screen Modal
                         }
               //echo $data['DiasVac']; 
               ?></td>
-            <td>
 
-              <?php 
-
-               $sqlUsuarioDV = "SELECT * FROM `tbl_vacaciones_usuarioxanio` as u  
-                        WHERE  u.CodEmpleado = ".$data['CodUsuario']." ";
-
-                        if($resqryUsuarioDV = $mysqli->query($sqlUsuarioDV)) {
-                        while($rowDV = mysqli_fetch_assoc($resqryUsuarioDV)){ 
-                             echo $DiasVacPHP = $rowDV['DiasVac'] + $dataCons01['DiasVacAnt'];
-                        }
-
-                        }
-              //echo $data['DiasVac']; 
-              ?></td>
-
-            <td>
+               <td>
                     <?php 
 
                $sqlUsuarioDVD = "SELECT * FROM `tbl_solicitud` as u  
@@ -416,6 +401,25 @@ Full screen Modal
               //echo $data['DiasVac']; 
               ?>
             </td>
+
+            <td>
+
+              <?php 
+
+               $sqlUsuarioDV = "SELECT * FROM `tbl_vacaciones_usuarioxanio` as u  
+                        WHERE  u.CodEmpleado = ".$data['CodUsuario']." ";
+
+                        if($resqryUsuarioDV = $mysqli->query($sqlUsuarioDV)) {
+                        while($rowDV = mysqli_fetch_assoc($resqryUsuarioDV)){ 
+                              $DiasVacPHP = $rowDV['DiasVac'] + $dataCons01['DiasVacAnt'];
+                              echo abs($DiasVacPHP);
+                        }
+
+                        }
+              //echo $data['DiasVac']; 
+              ?></td>
+
+           
 
             <td>
 

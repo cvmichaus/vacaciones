@@ -17,13 +17,7 @@ session_start();
 <form class="form-horizontal form-label-left" action="addusolicitud.php" method="post" name="formulario">
      <input id="CodEmpleado" name="CodEmpleado" type="hidden" value="<?php echo $iduser; ?>">
                         
-						<div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Periodo </label>
-                        <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input id="periodo" name="periodo" type="text" class="form-control" data-inputmask="">
-                        <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
-                        </div>
-                        </div>
+				
 
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha Inicio</label>
@@ -50,7 +44,7 @@ session_start();
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Solicitados </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
 
-						        <input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" onblur="restadias();">
+						        <input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" readonly="readonly" onblur="restadias();">
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -107,13 +101,14 @@ session_start();
                   <div class="form-group">
                   <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones </label>
                   <div class="col-md-9 col-sm-9 col-xs-9">
-                  <input  id="totaldias" name="totaldias" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP; ?>'>
+      <input  id="totaldias" name="totaldias" type="text" class="form-control" data-inputmask="" readonly="readonly" value='<?php echo $DiasVacPHP; ?>'>
                   <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                   </div>
                   </div>
 
                                           <?php
-$qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and SeUso =0 ";
+
+                        $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$iduser." and SeUso =0 ";
                         if($resQryConsulta98 = $mysqli->query($qryConsulta98)) {
                                                  $dataCons98 = mysqli_fetch_assoc($resQryConsulta98);
                                                 
@@ -129,19 +124,19 @@ $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE 
                                                        <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Vacaciones Periodo Anterior </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <input  id="diasperiodoant" name="diasperiodoant" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacAntPHP; ?>'>
+  <input  id="diasperiodoant" name="diasperiodoant" type="text" readonly="readonly" class="form-control" data-inputmask="" value='<?php echo $DiasVacAntPHP; ?>'>
                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                     </div>
                                     </div>
-
 
                                     <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Totales </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <input  id="diasperiodoant" name="diasperiodoant" type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
+                                    <input  id="diasperiodoant" name="diasperiodoant" readonly="readonly"  type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                     </div>
                                     </div>
+                                    
                                                         <?php
                                                                                             
                                                 }else{
@@ -160,7 +155,7 @@ $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE 
                           <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Restantes</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input id="diasres" name="diasres" type="text" class="form-control" data-inputmask="">
+                        <input id="diasres" name="diasres" type="text" class="form-control" readonly="readonly" data-inputmask="">
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>

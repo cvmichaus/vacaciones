@@ -51,7 +51,7 @@
 	 $DiasVacPeriodoAntPHP = $_POST["DiasVacPeriodoAnt"];   
 
 	
-
+	 	/* INSERTAMOS AL USUARIO */
 	$consulta1 = "INSERT INTO `tbl_usuarios` (`CodUsuario`, `Usuario`, `Clave`, `Correo`, `Estatus`, `Perfil`, `Fecha_Alta`, `Hora_Alta`) VALUES (NULL,'".$UsuarioPHP."', '".$PassEncriptadoPHP."', '".$CorreoPHP."', '1', '".$PerfilPHP."','".$fecha_del_dia."', '".$hora_actual."' )";
 
 	if($resultado1 = $mysqli->query($consulta1)) {
@@ -64,29 +64,28 @@
 
 					 $UsuarioCod =  $data["CodUsuario"];
 
-
+					 			/* INSERTAMOS EMPLEADOS */
 							$consulta2 = "INSERT INTO `tbl_empleados` (`CodE`,`CodUsu`,`Nombres`,`ApellidoPaterno`,`ApellidoMaterno`,`Posicion`, `Area`, `Reporta`, `Jefe2`, `fecha_ingreso`,`aniosA`,`mesesA`,`diasA`,`DiasVac`) VALUES (NULL,'".$UsuarioCod."','".$_POST["nombre"]."','".$_POST["appaterno"]."','".$_POST["apmaterno"]."','".$_POST["Posicion"]."', '".$_POST['area']."', '".$_POST['reporta']."', '".$_POST['jefe']."', '".$_POST['fecha_ingreso']."', '".$_POST['ant_anios']."', '".$_POST['ant_mes']."', '".$_POST['ant_dias']."','".$_POST['diasvacaciones']."')";
 
 							if($resultado2 = $mysqli->query($consulta2)) {
 
-							
-
+							/* OBTEBNEMOS AÑO ACTUAL */
 							$aniophp =	date("Y");
-
-										$consulta3 = "INSERT INTO `tbl_vacaciones_usuarioxanio` (`CodVac`,`CodEmpleado`,`Anio`,`DiasVac`) VALUES (NULL,'".$UsuarioCod."','".$aniophp."','".$_POST['diasvacaciones']."' )";
+											/* INSERTAMOS EN EL REGISTRO DE VACACIONES ACTUAL X AÑO  */
+										$consulta3 = "INSERT INTO `tbl_vacaciones_usuarioxanio` (`CodVac`,`CodEmpleado`,`Anio`,`DiasVac`,`Fecha_iniciov`,`Fecha_finv`) VALUES (NULL,'".$UsuarioCod."','".$aniophp."','".$_POST['diasvacaciones']."','".$fecha_del_dia."','".$date_future2."' )";
 
 											if($resultado3 = $mysqli->query($consulta3)) {
 
 											//echo "si se guardo la consulta";
-
+														/* SE PUSO DIAS ANTERIORES  */
 													if($PeriodoAntPHP <> 0 or $PeriodoAntPHP <> NULL){
-															
+															/* SI ES ASU SE INSERTA EN LA TABLA DE PERIODO ANTERIOR */
 													      $consulta4 = "INSERT INTO `tbl_periodoanterior` (`CodPeridoAnt`,`CodUsuario`,`PeriodoAnt`,`DiasVacAnt`,`FechaTermino`) VALUES (NULL,'".$UsuarioCod."','".$PeriodoAntPHP."','".$DiasVacPeriodoAntPHP."','".$date_future2."' )";
 
 															if($resultado4 = $mysqli->query($consulta4)) {
 
 															//echo "si se guardo la consulta4";	
-
+																	/* MANDAMOS CORREO CON LOS DATOS DEL USUARIO*/
 																	
 																		require("../PHPMailer-master/src/PHPMailer.php");
 																		require("../PHPMailer-master/src/SMTP.php");
@@ -116,6 +115,7 @@
 																		$mail3->SetFrom("vacacioneswrimexico@gmail.com");
 																		//$mail3->AddAddress($CorreoEmpleado2);
 																		$mail3->AddAddress($CorreoPHP);
+																		//$mail3->AddAddress("Alejandro.lopez@wri.org");
 																		//$mail3->AddAddress("Alejandro.lopez@wri.org");
 
 
@@ -162,7 +162,7 @@
 															}
 
 													}else if($PeriodoAntPHP == 0 or $PeriodoAntPHP == NULL){
-
+																/* SI NO TIENE DIAS DE PERIODO ANTERIOR MANDAMOS CORREO  */
 														
 						  											
 																		require("../PHPMailer-master/src/PHPMailer.php");

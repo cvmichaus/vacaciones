@@ -61,10 +61,6 @@ session_start();
         var selected = [];
 
         $('#example2').DataTable( {
-          dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
             stateSave: true,
             "order": [[ 1, "desc" ]],
         } );
@@ -94,10 +90,6 @@ session_start();
         var selected = [];
 
         $('#example3').DataTable( {
-          dom: 'Bfrtip',
-        buttons: [
-            'copy', 'csv', 'excel', 'pdf', 'print'
-        ],
             stateSave: true,
             "order": [[ 1, "desc" ]],
         } );
@@ -287,7 +279,7 @@ Full screen Modal
             
               <td>
               <?php
-              $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
+              $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio,Fecha_iniciov,Fecha_finv FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
                   if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
                       $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);  
                       echo $dataCons02['DiasVacDisponibles'] + $DiasVacAntPHP;                   
@@ -430,7 +422,25 @@ Full screen Modal
                   </div>
 <!--SMALL MODAL-->
 
+<?php
+     $FechaInicioVacAct=$dataCons02['Fecha_iniciov'];
+                                                     
+                                                     $porciones2 = explode("-", $FechaInicioVacAct);
+                                                     $Anio_PHP2=$porciones2[0];
+                                                     $Mes_PHP2=$porciones2[1];
+                                                     $Dia_PHP2=$porciones2[2];
+                                                     $esp2="-";
+                                                     $FechaInicioVacAct2 = $Dia_PHP2.$esp2.$Mes_PHP2.$esp2.$Anio_PHP2; 
 
+                                                     $FechaFinVacAct=$dataCons02['Fecha_finv'];
+
+                                                     $porciones3 = explode("-", $FechaFinVacAct);
+                                                     $Anio_PHP3=$porciones3[0];
+                                                     $Mes_PHP3=$porciones3[1];
+                                                     $Dia_PHP3=$porciones3[2];
+                                                     $esp3="-";
+                                                     $FechaFinVacAct2 = $Dia_PHP3.$esp3.$Mes_PHP3.$esp3.$Anio_PHP3; 
+?>
 <div class="modal fade" id="mostrarmodal" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
    <div class="modal-dialog">
       <div class="modal-content">
@@ -440,7 +450,7 @@ Full screen Modal
      </div>
          <div class="modal-body">
             <h6>Bienvenido <?php echo $data['Nombres'];  echo " "; echo $data['ApellidoPaterno']; echo " "; echo $data['ApellidoMaterno']; ?></h6>
-            Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> </span>
+            Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo   <?php echo $FechaInicioVacAct2; ?> al <?php echo $FechaFinVacAct2; ?> </span>
               <span style="color: red;font-weight: bolder;">
             <?php
 
@@ -456,6 +466,10 @@ Full screen Modal
                                               $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);   
                                                     $DiasVacAntPHP =  $dataCons02['DiasVacAnt'];
                                                      $FechaterminoPHP =  $dataCons02['FechaTermino'];
+
+                                                    
+
+
                                                      /* Reconstrimos las Fechas */
                                                      $porciones = explode("-", $FechaterminoPHP);
                                                      $Anio_PHP=$porciones[0];
@@ -667,12 +681,26 @@ Full screen Modal
 
       var total =  parseInt(diasperiodoant);
       var res = parseInt(total) - parseInt(diassol);
-      document.getElementById("diasres").value = res;
+
+      if( res<0){
+            document.getElementById("diasres").value =Math.abs(res);
+        }else{
+           document.getElementById("diasres").value = res;
+        }
+
+      //document.getElementById("diasres").value = res;
 
       } else if(diasperiodoant == 0){
       var totaldias = document.getElementById('totaldias').value;
       var res = parseInt(totaldias) - parseInt(diassol);
-      document.getElementById("diasres").value = res;
+
+        if( res<0){
+             document.getElementById("diasres").value =Math.abs(res);
+        }else{
+           document.getElementById("diasres").value = res;
+        }
+
+     
       }
 
   }
