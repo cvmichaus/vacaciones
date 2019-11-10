@@ -47,27 +47,27 @@ session_start();
                                                   $DiasSolPHP = $datasol['DiasSolicitados'];
 
                                                               if($DiasSolPHP == $DiasPeriodoAnt_PHP){ /* SI ES IGUAL */
-                                                              echo '<script language="javascript">alert(" son iguales se pondra en  0");</script>';
+                                                              //echo '<script language="javascript">alert(" son iguales se pondra en  0");</script>';
                                                               $residuo =  $DiasPeriodoAnt_PHP - $DiasSolPHP;
-                                                              echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
+                                                              //echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
 
                                                                     $consulta2 = "UPDATE `tbl_periodoanterior` SET `DiasVacAnt` = '".$residuo."' WHERE  CodUsuario = '".$_POST["CodEmpleado"]."' ";             
                                                                     if($resultado2 = $mysqli->query($consulta2)) {
-                                                                    echo '<script language="javascript">alert(" se realizo el Update del Residuo: '.$residuo.'  ");</script>';
+                                                                    //echo '<script language="javascript">alert(" se realizo el Update del Residuo: '.$residuo.'  ");</script>';
                                                                     }
 
 
                                                               }/* SI ES IGUAL */
                                                                   else  if($DiasSolPHP > $DiasPeriodoAnt_PHP){/*ES MAYOR */
-                                                                  echo '<script language="javascript">alert(" si es mayor necesitara que se descuente ");</script>';
+                                                                  //echo '<script language="javascript">alert(" si es mayor necesitara que se descuente ");</script>';
                                                                   $residuo =  $DiasSolPHP - $DiasPeriodoAnt_PHP ;
-                                                                  echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
+                                                                  //echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
 
                                                                       $residuo0=0;
 
                                                                       $consulta2 = "UPDATE `tbl_periodoanterior` SET `DiasVacAnt` = '".$residuo0."', SeUso=1 WHERE  CodUsuario = '".$_POST["CodEmpleado"]."' ";             
                                                                       if($resultado2 = $mysqli->query($consulta2)) {
-                                                                      echo '<script language="javascript">alert(" se realizo el Update del Residuo: '.$residuo0.'  ");</script>';
+                                                                      //echo '<script language="javascript">alert(" se realizo el Update del Residuo: '.$residuo0.'  ");</script>';
 
                                                                               $sqltrab = "SELECT * FROM  `tbl_empleados`   WHERE  CodUsu  = ".$_POST["CodEmpleado"]." ";
                                                                               if($qrytrab = $mysqli->query($sqltrab)) {
@@ -78,19 +78,19 @@ session_start();
 
                                                                                     $consulta4 = "UPDATE `tbl_vacaciones_usuarioxanio`  SET `DiasVac` = ".$residuo2." WHERE  CodEmpleado = ".$_POST["CodEmpleado"]." ";  
                                                                                     if($resultado3 = $mysqli->query($consulta4)) {
-                                                                                    echo '<script language="javascript">alert(" entro al if donde el residuo2 se desconto del dis vac tiene valor  Residuo2: '.$residuo2.'  ");</script>';
+                                                                                   // echo '<script language="javascript">alert(" entro al if donde el residuo2 se desconto del dis vac tiene valor  Residuo2: '.$residuo2.'  ");</script>';
 
                                                                                       $consulta1 = "INSERT INTO `tbl_rasolicitud` (`CodRAS`, `CodSol`,  `CodUsuario`,`Motivo`, `FechaAR`, `HoraAR`, `EstatusSolicitud`, `Tipo`) VALUES (NULL,'".$_POST["CodS"]."', '".$_POST["CodEmpleado"]."', '".$_POST['observaciones']."', '".$fecha_del_dia."', '".$hora_actual."','".$_POST['EstatusSol']."','2')";             
                                                                                       if($resultado1 = $mysqli->query($consulta1)) {
 
-                                                                                      echo '<script language="javascript">alert(" se interto la aceptacion de la solicitud ");</script>';
+                                                                                     // echo '<script language="javascript">alert(" se interto la aceptacion de la solicitud ");</script>';
 
                                                                                               $consulta3 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";
                                                                                               if($resultado3 = $mysqli->query($consulta3)) {
-                                                                                              echo '<script language="javascript">alert(" se actualizo la tabla tbl_solicitud ");</script>';
+                                                                                             // echo '<script language="javascript">alert(" se actualizo la tabla tbl_solicitud ");</script>';
                                                                                               header("Location: index.php");  
                                                                                               }  else{
-                                                                                              echo '<script language="javascript">alert(" no se actualizo la tabla tbl_solicitud ");</script>';
+                                                                                              //echo '<script language="javascript">alert(" no se actualizo la tabla tbl_solicitud ");</script>';
                                                                                               }
 
                                                                                       }
