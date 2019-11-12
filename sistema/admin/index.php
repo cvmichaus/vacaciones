@@ -394,7 +394,7 @@ Full screen Modal
 
                         if($resqryUsuarioDVD = $mysqli->query($sqlUsuarioDVD)) {
                         while($rowDVDVD = mysqli_fetch_assoc($resqryUsuarioDVD)){ 
-                             echo $DiasVacPHP = $rowDVDVD['DiasSolicitados'];
+                             echo $DiasVacPHP = $rowDVDVD['DiasSolicitados']; echo ",";
                         }
 
                         }

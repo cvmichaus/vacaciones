@@ -385,7 +385,8 @@ Full screen Modal
                           <th>Fecha Inicio</th>
                           <th>Fecha Fin</th>
                           <th>Dias Solicitados</th>
-                          <th>Estatus</th>             
+                          <th>Estatus</th>  
+                          <th>Opciones</th>  						  
                         </tr>
                       </thead>
                       <tbody>
@@ -421,6 +422,18 @@ Full screen Modal
                 else if($EstatusPHP == 2){ 
                 echo "PROCESO";}
                 else {echo "NA";}
+              ?>
+              </td>
+			  
+			   <td>
+              <?php 
+            
+                if($EstatusPHP == 2 ){
+
+              ?>
+                   <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formsolicitud2.php','codsol=<?php echo $row['CodSol']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Editar Solicitud </button>
+              <?php
+                }               
               ?>
               </td>
 
@@ -474,7 +487,6 @@ Full screen Modal
          <div class="modal-body">
             <h6>Bienvenido <?php echo $dataGerentes['Nombres'];  echo " "; echo $dataGerentes['ApellidoPaterno']; echo " "; echo $dataGerentes['ApellidoMaterno']; ?></h6>
             <br>
-
       <?php
 
             $qryConsSol = "SELECT COUNT(*) as SiHaySol FROM `tbl_solicitud` s 
@@ -524,13 +536,30 @@ Full screen Modal
                    <?php echo $dataGerentes['Nombres'];  echo " "; echo $dataGerentes['ApellidoPaterno']; echo " "; echo $dataGerentes['ApellidoMaterno']; ?>
 
                    <?php
-      $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
+      $qryConsulta02 = "SELECT DiasVac as DiasVacDisponibles,Anio,Fecha_iniciov,Fecha_finv FROM tbl_vacaciones_usuarioxanio WHERE CodEmpleado = ".$iduser." ";
                   if($resQryConsulta02 = $mysqli->query($qryConsulta02)) {
-                      $dataCons02 = mysqli_fetch_assoc($resQryConsulta02);                        
+                      $dataCons02 = mysqli_fetch_assoc($resQryConsulta02); 
+					  
+						$FechaInicioVacAct=$dataCons02['Fecha_iniciov'];
+						$porciones2 = explode("-", $FechaInicioVacAct);
+						$Anio_PHP2=$porciones2[0];
+						$Mes_PHP2=$porciones2[1];
+						$Dia_PHP2=$porciones2[2];
+						$esp2="-";
+						$FechaInicioVacAct2 = $Dia_PHP2.$esp2.$Mes_PHP2.$esp2.$Anio_PHP2; 
+
+						$FechaFinVacAct=$dataCons02['Fecha_finv'];
+
+						$porciones3 = explode("-", $FechaFinVacAct);
+						$Anio_PHP3=$porciones3[0];
+						$Mes_PHP3=$porciones3[1];
+						$Dia_PHP3=$porciones3[2];
+						$esp3="-";
+						$FechaFinVacAct2 = $Dia_PHP3.$esp3.$Mes_PHP3.$esp3.$Anio_PHP3; 					  
                   }
     ?>
 
-     Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo  <?php  echo $dataCons02['Anio']; ?> </span>
+     Tienes <span style="color: green;font-weight: bolder;"> <?php  echo $dataCons02['DiasVacDisponibles']; ?> Dias de Vacaciones  del Periodo <?php echo $FechaInicioVacAct2; ?> al <?php echo $FechaFinVacAct2; ?> </span>
 
            <span style="color: red;font-weight: bolder;">
             <?php

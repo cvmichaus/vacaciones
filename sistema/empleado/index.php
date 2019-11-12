@@ -329,7 +329,8 @@ Full screen Modal
                           <th>Fecha Inicio</th>
                           <th>Fecha Fin</th>
                           <th>Dias Solicitados</th>
-                          <th>Estatus</th>             
+                          <th>Estatus</th>
+                           <th>Opciones</th>             
                         </tr>
                       </thead>
                       <tbody>
@@ -377,6 +378,18 @@ Full screen Modal
                 else if($EstatusPHP == 2){ 
                 echo "PROCESO";}
                 else {echo "NA";}
+              ?>
+              </td>
+
+               <td>
+              <?php 
+            
+                if($EstatusPHP == 2 ){
+
+              ?>
+                   <button type="button" class="btn btn-round btn-success" onclick="ejecuta_ajax('formsolicitud2.php','codsol=<?php echo $row['CodSol']; ?>','ventana');"  data-toggle="modal" data-target=".bs-example-modal-sm" > Editar Solicitud </button>
+              <?php
+                }               
               ?>
               </td>
 

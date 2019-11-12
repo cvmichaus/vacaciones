@@ -18,7 +18,7 @@ session_start();
 
 
                         <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-3">Observaciones de Rechazo</label>
+                        <label class="control-label col-md-4 col-sm-4 col-xs-4">Observaciones de Rechazo</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
                         <textarea id="observaciones" name="observaciones" type="text" class="form-control" data-inputmask=""></textarea>
                         <input id="CodS" name="CodS" type="hidden" class="form-control" value='<?php echo $CodSolicitudphp; ?>'>

@@ -15,8 +15,22 @@ $user = isset($_SESSION['UsuarioNombre']) ? $_SESSION['UsuarioNombre'] : null ;
 $iduser= isset($_SESSION['CodUsuario']) ? $_SESSION['CodUsuario'] : null ;
 
 
-$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`DiasPeriodoAnt`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."',  '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','".$_POST['diasperiodoant']."','2','".$fecha_del_dia."','".$hora_actual."')";					   
-	if($resultado1 = $mysqli->query($consulta1)) {
+$CodSolicitudPHP= isset($_POST['CodSolicitud']) ? $_POST['CodSolicitud'] : null ;
+
+$consulta1U =" UPDATE `tbl_solicitud` SET  `FechaInicio`= '".$_POST['dateini']."',
+                                           `FechaFin`=  '".$_POST['datefin']."', 
+                                           `DiasSolicitados`= '".$_POST['diassol']."',
+                                           `TotaldiasVac`= '".$_POST['totaldias']."',
+                                           `DiasRestantes`= '".$_POST['diasres']."',
+                                           `DiasPeriodoAnt`= '".$_POST['diasperiodoant']."',
+                                           `FechaAltaS`= '".$fecha_del_dia."',
+                                           `HoraAltaS` = '".$hora_actual."'
+                                            WHERE CodSol =  '".$_POST['CodSolicitud']."' ";
+
+/*
+$consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio`, `FechaFin`, `DiasSolicitados`, `TotaldiasVac`,`DiasRestantes`,`DiasPeriodoAnt`,`Estatus`,`FechaAltaS`, `HoraAltaS`) VALUES (NULL,'".$_POST["CodEmpleado"]."',  '".$_POST['dateini']."', '".$_POST['datefin']."', '".$_POST['diassol']."', '".$_POST['totaldias']."','".$_POST['diasres']."','".$_POST['diasperiodoant']."','2','".$fecha_del_dia."','".$hora_actual."')";	
+*/
+	if($resultado1 = $mysqli->query($consulta1U)) {
 		
 		
 		$sqlUsuario = "SELECT * FROM `tbl_usuarios` as u  INNER JOIN `tbl_empleados` as e ON u.CodUsuario = e.CodUsu WHERE u.Estatus = 1 AND  u.CodUsuario = ".$_POST["CodEmpleado"]." ";
@@ -68,7 +82,7 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio
        
 
 
-            $mail3->Subject = "Solicitud de Vacaciones";
+            $mail3->Subject = "Solicitud de Vacaciones Actulizada";
             $mail3->Body = '
               <html>
               <head>
@@ -76,11 +90,11 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio
               </head>
               <body>
               <h1>
-              Notificación de Solicitud de Vacaciones:
+              Notificación de Solicitud de Vacaciones Actualizadas:
               </h1>
               <p>
 
-              Hola estimado '.$NombreReporta.'  el empleado '.$_POST['NombreEmpleado'].' ha solicitado vacaciones '.$_POST['dateini'].' al '.$_POST['datefin'].' <br>
+              Hola estimado '.$NombreReporta.'  el empleado '.$_POST['NombreEmpleado'].' ha actualizado la solicitud de vacaciones del periodo  '.$_POST['dateini'].' al '.$_POST['datefin'].' <br>
               Para aprobar o rechazar las vacaciones favor de seguir el siguiente link
               <br>
               http://192.168.3.65/sistemadevacaciones/

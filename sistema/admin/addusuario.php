@@ -193,33 +193,35 @@
 																		$mail2->SetFrom("vacacioneswrimexico@gmail.com");
 																		//$mail2->AddAddress($CorreoEmpleado2);
 																		$mail2->AddAddress($CorreoPHP);
-																		//$mail2->AddAddress("Alejandro.lopez@wri.org");
+																		$mail2->AddAddress("recursos.humanos@wri.org");
 
 
-																		$mail2->Subject = "Alta en el Sistema de Solicitud de Vacaciones WRI";
+																		$mail2->Subject = "Alta en el Sistema de Solicitud de Vacaciones de WRI México";
 																		$mail2->Body = '
 																		<html>
-																	<head>
-																	<title>Bienvenido Usuario '.$nombrePHP.'  </title>
-																	</head>
-																	<body>
-																	<h1>
-																	Notificacion de Alta en Sistema de Solicitud de Vacaciones WRI:
-																	</h1>
-																	<p>
+																		<head>
+																		<title>Bienvenido Usuario '.$nombrePHP.'  </title>
+																		</head>
+																		<body>
+																		<h1>
+																		Notificación de Alta en el Sistema de Solicitud de Vacaciones de WRI México
+																		</h1>
+																		<p>
 
-																	Hola estimado Usuario '.$nombrePHP.' se te ha dado de alta en el sistema de Vacaciones WRI <br>
-																	Tus Datos son los Siguientes:
-																	<br>
-																	Usuario: '.$UsuarioPHP.'
-																	<br>
-																	Clave: '.$PassPHP.'
-																	<br>
-																	Puedes entrar a tu perfil a solicitar vacaciones  desde 
-																	http:localhost/sistemadevacaciones/index.php
-																	</p>
-																	</body>
-																	</html>
+																		Hola estimado  '.$nombrePHP.' has sido dado de alta en el Sistema de Solicitud de Vacaciones de WRI México <br>
+																		Tus Datos son los Siguientes:
+																		<br>
+																		Usuario: '.$UsuarioPHP.'
+																		<br>
+																		Clave: '.$PassPHP.'
+																		<br>
+																		Puedes entrar a tu perfil a solicitar vacaciones  desde 
+																		http://192.168.3.65/sistemadevacaciones/
+																		<BR>
+																		*si requieres vacaciones de forma anticipada favor de acudir con Recursos Humanos.
+																		</p>
+																		</body>
+																		</html>
 																		';
 
 
