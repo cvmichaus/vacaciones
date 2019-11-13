@@ -44,7 +44,7 @@ session_start();
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Solicitados </label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
 
-						        <input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" readonly="readonly" onblur="restadias();">
+					<input id="diassol" name="diassol" type="text" class="form-control" data-inputmask="" readonly="readonly" onblur="restadias();">
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -132,7 +132,7 @@ session_start();
                                     <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Totales </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <input  id="diasperiodoant" name="diasperiodoant" readonly="readonly"  type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
+                                    <input  id="diastotales" name="diastotales" readonly="readonly"  type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                     </div>
                                     </div>
@@ -163,7 +163,7 @@ session_start();
                         <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
                         
- <input type="submit" value="ENVIAR SOLICITUD" class="btn btn-primary">  
+ <input id="btnsol"  type="submit" value="ENVIAR SOLICITUD" class="btn btn-primary">  
                         </div>
                       </div>
 

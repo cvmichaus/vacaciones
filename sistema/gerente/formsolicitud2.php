@@ -32,7 +32,7 @@ session_start();
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha Inicio</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input id="dateini" name="dateini" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask="" min="<?php echo  $FechaInicioPHP; ?>" value="<?php echo  $FechaInicioPHP; ?>">
+                        <input id="dateini" name="dateini" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask=""  value="<?php echo  $FechaInicioPHP; ?>">
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                         </div>
                         </div>
@@ -40,7 +40,7 @@ session_start();
                         <div class="form-group">
                         <label class="control-label col-md-3 col-sm-3 col-xs-3">Fecha Final</label>
                         <div class="col-md-9 col-sm-9 col-xs-9">
-                        <input id="datefin" name="datefin" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask=""  min="<?php echo  $FechaFinPHP; ?>" value="<?php echo  $FechaFinPHP; ?>"  onblur="enviarDatos();">
+                        <input id="datefin" name="datefin" type="date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" data-inputmask=""  value="<?php echo  $FechaFinPHP; ?>"  onblur="enviarDatos();">
               
                         <!--onblur="obtenerfechas();-->
                         <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
@@ -143,7 +143,7 @@ session_start();
                                     <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-3">Dias Totales </label>
                                     <div class="col-md-9 col-sm-9 col-xs-9">
-                                    <input  id="diasperiodoant" name="diasperiodoant" readonly="readonly"  type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
+                                    <input  id="diastotales" name="diastotales" readonly="readonly"  type="text" class="form-control" data-inputmask="" value='<?php echo $DiasVacPHP +  $DiasVacAntPHP; ?>'>
                                     <span class="fa fa-user form-control-feedback right" aria-hidden="true"></span>
                                     </div>
                                     </div>
@@ -174,7 +174,7 @@ session_start();
                         <div class="form-group">
                         <div class="col-md-9 col-md-offset-3">
                         
- <input type="submit" value="MODIFICAR SOLICITUD" class="btn btn-primary">  
+ <input id="btnsol" type="submit" value="MODIFICAR SOLICITUD" class="btn btn-primary">  
                         </div>
                       </div>
 

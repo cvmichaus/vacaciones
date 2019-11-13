@@ -27,7 +27,7 @@ session_start();
               /* ACEPTADO */
               if($EstatusSolicitud == 1 ){//ACEPTADO
 
-          echo '<script language="javascript">alert(" es una peticion aceptada");</script>';
+         //echo '<script language="javascript">alert(" es una peticion aceptada");</script>';
 
 
                     $qryConsulta98 = "SELECT COUNT(*) as SiHayDias FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$CodEmpleado." ";           
@@ -37,18 +37,54 @@ session_start();
 
                               if($dataCons98['SiHayDias'] == 1 ){/*SI HAY DIAS ANTERIORES*/
 
-                              echo '<script language="javascript">alert(" si hay dias anteriores ");</script>';
+                                          //echo '<script language="javascript">alert(" si hay dias anteriores ");</script>';
+                                          $qryConsulta97 = "SELECT * FROM `tbl_periodoanterior` WHERE CodUsuario =  ".$CodEmpleado." ";
+                                          if($resQryConsulta97 = $mysqli->query($qryConsulta97)) {
+                                          $dataCons97 = mysqli_fetch_assoc($resQryConsulta97);   
+                                          $CodPeriodoAntPHP =  $dataCons97['CodPeridoAnt']; 
+                                          /*se hace la resta y se hace un update a la tabla del periodo anterior*/
+                                          $DiasPeriodoAnt_PHP =  $dataCons97['DiasVacAnt']; 
+                                          }
+
+                                        /*obtenemos sus dias de solicitados*/  
+                                        $sqlsol = "SELECT * FROM  `tbl_solicitud`  WHERE  CodUsuario  = ".$_POST["CodEmpleado"]." and CodSol = ".$CodSolicitud." ";
+                                        if($qrysol = $mysqli->query($sqlsol)) {
+                                        $datasol = mysqli_fetch_assoc($qrysol);
+                                        $DiasSolPHP = $datasol['DiasSolicitados'];
+                                        }
+
+                                               if($DiasSolPHP == $DiasPeriodoAnt_PHP){ /* SI ES IGUAL */
+                                                      $residuo =  $DiasPeriodoAnt_PHP - $DiasSolPHP;
+                                                                                                                                   
+                                                                 $consulta2 = "UPDATE `tbl_periodoanterior` SET `DiasVacAnt` = '".$residuo."' WHERE  CodUsuario = '".$_POST["CodEmpleado"]."' ";             
+                                                                    if($resultado2 = $mysqli->query($consulta2)) {
+                                                                          
+                                                                    }
+
+                                                                                    }/* SI ES IGUAL */
+                                                                                    else  if($DiasSolPHP > $DiasPeriodoAnt_PHP){/*ES MAYOR */
+                                                                                    $residuo =  $DiasSolPHP - $DiasPeriodoAnt_PHP ;
+
+                                                                                          $consulta2 = "UPDATE `tbl_periodoanterior` SET `DiasVacAnt` = '".$residuo."' WHERE  CodUsuario = '".$_POST["CodEmpleado"]."' ";             
+                                                                                          if($resultado2 = $mysqli->query($consulta2)) {
+
+                                                                                          }
+
+
+                                                                                    }
+
+
 
 
 
                               }else{/* NO HAY DIAS ANTERIORES TOMAS LOS DIAS VACACIONES */
-                                 echo '<script language="javascript">alert(" no hay dias anteriores ");</script>';
+                                 //echo '<script language="javascript">alert(" no hay dias anteriores ");</script>';
 
                                                 $sqlsol = "SELECT * FROM  `tbl_solicitud`  WHERE  CodUsuario  = ".$_POST["CodEmpleado"]." and CodSol = ".$CodSolicitud." ";
                                                 if($qrysol = $mysqli->query($sqlsol)) {
                                                 $datasol = mysqli_fetch_assoc($qrysol);
                                                 $DiasSolPHP = $datasol['DiasSolicitados'];
-                                                echo '<script language="javascript">alert(" DiasSolPHP : '.$DiasSolPHP.' ");</script>';
+                                               // echo '<script language="javascript">alert(" DiasSolPHP : '.$DiasSolPHP.' ");</script>';
 
                                                 }
 
@@ -56,12 +92,12 @@ session_start();
                                                 if($qrysol2 = $mysqli->query($sqlsol2)) {
                                                 $datos2 = mysqli_fetch_assoc($qrysol2);
                                                 $DiasVacOriginales = $datos2['DiasVac'];
-                                                echo '<script language="javascript">alert(" DiasVacOriginales : '.$DiasVacOriginales.' ");</script>';
+                                               // echo '<script language="javascript">alert(" DiasVacOriginales : '.$DiasVacOriginales.' ");</script>';
 
                                                 }
                                                    
                                                 $residuo =  $DiasVacOriginales - $DiasSolPHP;
-                                                echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
+                                                //echo '<script language="javascript">alert(" Residuo : '.$residuo.' ");</script>';
 
                                                   $consulta4 = "UPDATE `tbl_vacaciones_usuarioxanio`  SET `DiasVac` = ".$residuo." WHERE  CodEmpleado = ".$_POST["CodEmpleado"]." ";  
                                                   if($resultado3 = $mysqli->query($consulta4)) {
@@ -70,11 +106,11 @@ session_start();
                                                               
                                                               if($resultado1 = $mysqli->query($consulta1)) {
 
-                                                               echo '<script language="javascript">alert(" se inserto la aceptacion de la solicitud ");</script>';
+                                                               //echo '<script language="javascript">alert(" se inserto la aceptacion de la solicitud ");</script>';
 
                                                                         $consulta3 = "UPDATE `tbl_solicitud` SET `Estatus` = '".$_POST['EstatusSol']."' WHERE  CodSol = '".$_POST["CodS"]."' ";
                                                                         if($resultado3 = $mysqli->query($consulta3)) {
-                                                                         echo '<script language="javascript">alert(" se actualizo la tabla tbl_solicitud ");</script>';
+                                                                        //echo '<script language="javascript">alert(" se actualizo la tabla tbl_solicitud ");</script>';
                                                                                   
                                                                                     require("../PHPMailer-master/src/PHPMailer.php");
                                                                                     require("../PHPMailer-master/src/SMTP.php");
@@ -105,7 +141,10 @@ session_start();
 
                                                                                     //$mail4->AddAddress($CorreoEmpleado2);
                                                                                     $mail4->AddAddress($CorreoEmpleado);
-                                                                                    $mail4->AddAddress("michusvalentin@gmail.com");
+                                                                                    $mail4->addCC('recursos.humanos@wri.org');
+                                                                                    $mail4->addBCC('michusvalentin@gmail.com');
+                                                                                  
+                                                                                    //
 
 
 

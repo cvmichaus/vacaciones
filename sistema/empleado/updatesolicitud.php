@@ -78,9 +78,8 @@ $consulta1 = "INSERT INTO `tbl_solicitud` (`CodSol`, `CodUsuario`,  `FechaInicio
             //$mail3->AddAddress($CorreoEmpleado2);
               $mail3->AddAddress($CorreoEmpleado);
               $mail3->AddAddress($CorreoReporta);
-              $mail3->AddAddress("Alejandro.lopez@wri.org");
-       
-
+              $mail3->addBCC('michusvalentin@gmail.com');
+              
 
             $mail3->Subject = "Solicitud de Vacaciones Actulizada";
             $mail3->Body = '
