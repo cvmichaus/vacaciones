@@ -142,11 +142,9 @@ session_start();
                                                                                     //$mail4->AddAddress($CorreoEmpleado2);
                                                                                     $mail4->AddAddress($CorreoEmpleado);
                                                                                     $mail4->addCC('recursos.humanos@wri.org');
-                                                                                    $mail4->addBCC('michusvalentin@gmail.com');
                                                                                   
-                                                                                    //
-
-
+                                                                                  
+                                                                                
 
                                                                                     $mail4->Subject = "Solicitud de Vacaciones Aprobada";
                                                                                     $mail4->Body = '
